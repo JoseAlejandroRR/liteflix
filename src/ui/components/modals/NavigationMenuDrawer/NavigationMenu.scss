@@ -1,0 +1,30 @@
+.menu-navigation {
+  ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+
+      a {
+        padding: 10px;
+        display: block;
+        font-size: 22px;
+        font-family: 'Bebas Neue';
+        letter-spacing: 4px;
+        color: #fff;
+
+        &:hover {
+          color: #64EEBC;
+        }
+      }
+
+      &.highlight { 
+        a {
+          font-weight: bold;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}

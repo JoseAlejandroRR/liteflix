@@ -1,0 +1,89 @@
+
+.dropdown-menu {
+  width: 100%;
+  text-align: center;
+
+  .item-selected {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    width: 100%;
+    display: block;
+  
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.dropdown-menu-active {
+
+  .ant-dropdown-menu-title-content {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+  }
+}
+
+
+.ant-dropdown-menu-item {
+  color: white !important;
+}
+
+.ant-dropdown-menu-item:hover {
+  background-color: #333333 !important;
+}
+
+.dropdown-menu-active {
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: auto;
+    opacity: 1;
+    top: -8px; 
+    right: 20px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #242424;
+    z-index: 1;
+  }
+
+  ul.ant-dropdown-menu {
+    background-color: #242424;
+    border-radius: 0;
+    padding: 10px;
+  }
+
+  .ant-dropdown-menu-title-content {
+
+    & > span {
+
+      display: flex;
+      flex: auto;
+      justify-content: space-between;
+      font-size: 16px;
+      
+      a {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  }
+
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu-active {
+    position: fixed !important;
+    top: auto !important;
+    left: 0;
+    bottom: 0 !important;
+
+    ul.ant-dropdown-menu {
+      
+      width: calc(100% - 20px);
+    }
+  }
+}

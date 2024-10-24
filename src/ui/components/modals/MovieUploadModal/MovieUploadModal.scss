@@ -1,0 +1,144 @@
+.movie-upload-modal {
+  width: 700px;
+
+  .close-icon {
+    color: #fff;    
+  }
+
+  .ant-modal-content {
+    background-color: #242424;
+    padding: 60px;
+    text-align: center;
+
+    h2 {
+      color: #64EEBC;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      text-align: center;
+    }
+    
+    .ant-upload-wrapper {
+      
+      .ant-upload-drag {
+        border-radius: 0px;
+        position: relative;
+        padding: 20px;
+      }
+
+      .ant-upload-text {
+        font-size: 14px;
+        letter-spacing: 2px;
+        color: #fff;
+      }
+
+    }
+
+    .input-container {
+      margin: 10px auto;
+      margin-bottom: 30px;
+    }
+
+    .input-container:last-child {
+      margin-bottom: 0px;
+    }
+
+    .movie-title-input {
+      border: none;
+      border-bottom: 1px solid #fff;
+      border-radius: 0px;
+      color: #fff;
+      width: 50%;
+      margin: 10px auto;
+      background-color: transparent;
+      text-align: center;
+      font-size: 16px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-family: 'Bebas Neue', sans-serif;
+
+      &::placeholder {
+        color: #fff;
+        opacity: 1;
+      }
+    }
+
+    .upload-button {
+      background-color: #919191;
+      border: 0;
+      border-radius: 0px;
+      font-size: 18px;
+      letter-spacing: 4px;
+      font-weight: 400;
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      padding: 25px 50px;
+    }
+  }
+}
+
+@keyframes slideUpIn {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDownOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.ant-modal-slide-up-enter {
+  animation: slideUpIn 0.5s ease forwards;
+}
+
+.ant-modal-slide-up-leave {
+  animation: slideDownOut 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ant-modal-mask-slide-up-enter {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.ant-modal-mask-slide-up-leave {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@media (width >= 768px) {
+  .ant-modal-slide-up {
+    border: 0;
+    width: 720px !important;
+    
+    .ant-modal-content {
+      border-radius: 0;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.navigation-menu-drawer {
+  background-color: #242424 !important;
+
+  button {
+    border: 0;
+    color: #fff !important;
+    background-color: transparent;
+
+    &.action-btn {
+      font-size: 26px !important;
+    }
+  }
+}

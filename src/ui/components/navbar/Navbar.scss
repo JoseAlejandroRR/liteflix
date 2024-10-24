@@ -1,0 +1,133 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 100px;
+  position: absolute;
+  top: 0;
+  width: calc(100% - 200px);
+  z-index: 10;
+  gap: 30px;
+
+  .logo {
+    color: #64EEBC;
+    font-size: 34px;
+    letter-spacing: 4px;
+
+    a {
+      color: #64EEBC;
+    }
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 30px;
+
+      li {
+        font-size: 28px;
+      }
+    }
+
+    a {
+      color: #fff;
+      letter-spacing: 4px;
+      font-weight: bold;
+    }
+
+    .left-actions {
+      li.action-add {
+        font-size: 18px;
+      }
+    }
+
+    .right-actions {
+      display: flex;
+      gap: 30px;
+
+      a {
+        font-weight: 400;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    width: calc(100% - 50px);
+
+    .left-actions {
+      li.action-add {
+        display: none !important;
+      }
+    } 
+
+    .left-actions li.action-menu {
+      display: block !important;
+    }
+
+    .right-actions {
+      li.action-notifications, li.action-menu {
+        display: none !important;
+      }
+    } 
+
+    .logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+    }
+
+    .actions {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+
+      li {
+        display: inline-flex;
+      }
+
+      
+
+      .left-actions {
+        justify-content: flex-start;
+      }
+
+      .right-actions {
+        justify-content: flex-end;
+        gap: 30px;
+      }
+    }
+  }
+}
+
+@media (width > 768px) {
+  .left-actions  {
+    li.action-menu {
+      display: none !important;
+    } 
+
+    .left-actions li.action-menu {
+      display: inline-block;
+    }
+
+    .right-actions {
+      li.action-notifications, li.action-menu {
+        display: inline-block;
+      }
+    } 
+  }
+}

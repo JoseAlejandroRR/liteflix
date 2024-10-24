@@ -1,0 +1,251 @@
+.main-movie {
+  opacity: 0;
+  animation: fadeInOut 5s ease-in-out infinite; 
+   
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+    }
+  } 
+
+  .buttons {
+    display: flex;
+    gap: 20px
+  }
+
+  button.highlight {
+    background: #242424;
+    border: 1px solid #242424;
+  }
+
+  .movie-info {
+    width: 100%;
+  }
+
+  button {
+    width: 248px;
+    opacity: 1;
+   
+    &::before {
+      content: "";
+      width: 0;
+      height: 100%;
+      background-color: red;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: smooth-appear 0.5s ease-in forwards;
+    }
+
+    span {
+      color: #fff;
+      z-index: 5;
+      opacity: 0;
+      animation: smooth-appear 10s ease forwards 2s;
+    }
+  }
+}
+
+.text-animation {
+  overflow: hidden;
+
+  .box {
+    opacity: 0;
+    position: relative;
+    width: 100%;
+    top: -20px;
+    animation: text-animation-transformer 1s ease forwards 2s;
+  }
+}
+
+@keyframes text-animation-transformer {
+  to{
+    top:0;
+    opacity:1;
+  }
+}
+
+@keyframes smooth-appear {
+  to{
+    width: 100%;
+    opacity:1;
+  }
+}
+
+@keyframes smooth-appear-text {
+  to{
+    opacity:1;
+    margin-left: 0;
+  }
+}
+
+@keyframes changeBorders {
+  0% {
+    border: solid 5px white;
+    border-left: solid 5px lime;
+  }
+  25% {
+    border: solid 5px white;
+    border-left: solid 5px lime;
+  }
+  25.02% {
+    border: solid 5px white;
+    border-left: solid 5px lime;
+    border-bottom: solid 5px lime;
+  }
+  50% {
+    border: solid 5px white;
+    border-left: solid 5px lime;
+    border-bottom: solid 5px lime;
+  }
+  50.02% {
+    border: solid 5px white;
+    border-left: solid 5px lime;
+    border-bottom: solid 5px lime;
+    border-right: solid 5px lime;
+  }
+  75% {
+    border: solid 5px white;
+    border-left: solid 5px lime;
+    border-bottom: solid 5px lime;
+    border-right: solid 5px lime;
+  }
+  75.02% {
+    border: solid 5px lime;
+  }
+}
+
+.animated-button {
+  position: relative;
+  padding: 15px 14px;
+  font-size: 16px;
+  width: 100%;
+  color: white;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+  background: transparent;
+
+  &::before {
+    content: "";
+    width: 0;
+    height: 100%;
+    background-color: #242424;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    animation: smooth-appear 0.5s ease-in-out forwards;
+  }
+
+  &:hover {
+   
+    .label {
+      color: #64EEBC;
+    }
+  }
+
+  div {
+    text-align: center;
+    z-index: 2;
+   
+ 
+    .label {
+      display: flex;
+      color: #fff;
+      z-index: 5;
+      opacity: 0;
+      animation: smooth-appear-text 1s ease forwards 0.4s;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.5s;
+      font-weight: bold;
+      position: relative;
+      margin-left: -20px;
+
+      svg {
+        margin-right: 8px;
+        margin-top: -5px;
+      }
+    }
+  }
+}
+
+.animated-button-with-boders::before,
+.animated-button-with-boders::after,
+.animated-button-with-boders div::before,
+.animated-button-with-boders div::after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.animated-button-with-boders::before {
+  height: 100%;
+  width: 1px;
+  left: 0;
+  bottom: 0;
+  opacity: 1;
+  animation: grow-left-border 0.2s forwards ease;
+}
+
+.animated-button-with-boders::after {
+  width: 100%;
+  height: 1px;
+  left: 0;
+  bottom: 0;
+  opacity: 1;
+  animation: grow-bottom-border 0.4s forwards;
+}
+
+.animated-button-with-boders div::before {
+  height: 100%;
+  width: 1px;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  animation: grow-left-border 0.3s forwards 0.3s;
+}
+
+.animated-button-with-boders div::after {
+  width: 100%;
+  height: 1px;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  animation: grow-bottom-border 0.4s forwards 0.2s;
+}
+
+@keyframes grow-left-border {
+  0% {
+    height: 0%;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes grow-bottom-border {
+  0% {
+    width: 0%;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
