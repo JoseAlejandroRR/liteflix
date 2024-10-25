@@ -7,30 +7,51 @@
 
   .ant-modal-content {
     background-color: #242424;
-    padding: 20px;
-    padding-bottom: 40px;
+    padding: 60px;
+    padding-top: 30px;
+    padding-bottom: 40px !important;
     text-align: center;
 
     h2 {
       color: #64EEBC;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       text-align: center;
     }
     
     .ant-upload-wrapper {
-      
-      .ant-upload-drag {
+
+      &.drag-upload-choose {
+        .ant-upload-drag {
+          border: 1px dashed #999
+        }
+      }
+
+      &.drag-upload-ready {
+
+        .ant-upload-drag-uploading {
+          padding: 0;
+          border: 0;
+
+          .ant-upload-btn {
+            padding: 0;
+          }
+        }
+      }
+
+      .ant-upload {
         background-color: transparent;
         border-radius: 0px;
         position: relative;
-        padding: 20px;
-        padding-bottom: 0px;
+
+        padding: 0px;
+        border: 0px;
+        height: 120px;
       }
 
       .ant-upload-text {
-        font-size: 14px;
-        letter-spacing: 2px;
+        font-size: 16px;
+        letter-spacing: 4px;
         color: #fff;
       }
 
@@ -72,6 +93,7 @@
           font-size: 16px;
           font-weight: bold;
           padding: 0px;
+          width: auto;
         }
       }
 
@@ -80,10 +102,40 @@
     .input-container {
       margin: 10px auto;
       margin-bottom: 30px;
+
+      button {
+        color: #000;
+        width: 248px;
+        padding: 28px 0;
+        letter-spacing: 4px;
+        border: 0;
+        font-size: 18px;
+        font-weight: 400;
+        border-radius: 0px;
+        font-family: 'Bebas Neue', sans-serif;
+
+        &.upload-button {
+          background-color: #919191;
+          color: #000;
+        }
+
+        &.upload-button-valid {
+          background-color: #fff;
+          color: #242424;
+
+          &:hover {
+           color: #242424;
+          }
+        }
+      }
+
+      &.first {
+        margin-bottom: 0px;
+      }
     }
 
     .input-container:first-child {
-      margin-bottom: 10px;
+      margin-bottom: 0px;
     }
 
     .input-container:last-child {
@@ -97,36 +149,45 @@
       color: #fff;
       width: 50%;
       margin: 10px auto;
+      margin-bottom: 20px;
+      margin-top: 30px;
       background-color: transparent;
       text-align: center;
       font-size: 16px;
       letter-spacing: 4px;
-      font-family: 'Bebas Neue', sans-serif;
+      font-weight: bold;
+
 
       &::placeholder {
-        color: #fff;
+        color: #666;
         opacity: 1;
       }
     }
 
-    .upload-button {
-      background-color: #919191;
-      border: 0;
-      border-radius: 0px;
-      font-size: 18px;
-      letter-spacing: 4px;
-      font-weight: 400;
-      color: #000;
-      font-family: 'Bebas Neue', sans-serif;
-      padding: 25px 50px;
+    .step-finished {
+      margin-top: 10px;
+      color: #fff;
 
-    }
+      .logo {
+        margin-top: 40px;
+        margin-bottom: 50px;
+      }
 
-    .upload-button-valid {
+      h3 {
+        font-size: 24px;
+        margin-bottom: 0px;
+      }
 
-      &:hover {
+      p {
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: 4px;
+      }
+
+      button {
         background-color: #fff;
-        color: #242424;
+        color: #000;
+        margin-top: 60px;
       }
     }
   }

@@ -28,8 +28,6 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
 
   const isLoading = loadingMyMovies || loadingPopular
 
-  console.log(loadingMyMovies, loadingPopular)
-
   useEffect(() => {
     if (category.key === items[0].key) {
       getPopularMovies()

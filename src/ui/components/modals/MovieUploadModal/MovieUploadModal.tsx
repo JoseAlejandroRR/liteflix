@@ -5,12 +5,37 @@ import { TfiClose } from "react-icons/tfi";
 import { UploadChangeParam, UploadProps } from 'antd/es/upload'
 import { UploadRequestOption, UploadRequestError } from 'rc-upload/lib/interface'
 import LiteflixAPI from '../../../../data/services/LiteflixAPI'
-import { AxiosError, AxiosRequestConfig } from 'axios'
 import { MovieDto } from '../../../../data/dto/MovieDto'
+import { AxiosError, AxiosRequestConfig } from 'axios'
+import Logo from '../../logo/Logo'
 
 import './MovieUploadModal.scss'
 
-const { Dragger } = Upload;
+const { Dragger } = Upload
+
+type StepFinishedProps = {
+  movie:MovieDto,
+  onClose: () => void
+}
+
+const StepFinished:React.FC<StepFinishedProps> = ({ movie, onClose }) => {
+  return (
+    <div className="step-finished">
+      <Logo />
+      <h3>¡Felicitaciones!</h3>
+      <p>{movie.title} Movie Title fue correctamente subida.</p>
+      <div className="input-container">
+        <Button
+          className={`upload-button upload-button-valid`}
+          type="primary"
+          onClick={onClose}
+          >
+          Ir a Home
+        </Button>
+      </div>
+    </div>
+  )
+}
 
 interface MovieUploadModalProps {
   open: boolean
@@ -22,11 +47,13 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
   const [file, setFile] = useState<File | null>(null)
   const liteflixApi = new LiteflixAPI()
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
-  const [ progress, setProgress ] = useState<number>(0)
+  const [ progress, setProgress ] = useState<number>(40)
   const [request, setRequest] = useState<UploadRequestOption | null>(null)
   const [ movie, setMovie ] = useState<MovieDto | null>()
-  const [ axiosCtr, setAxiosCtr ] = useState<AbortController>()
+  const [ axiosCtr, setAxiosCtr ] = useState<AbortController | null>(null)
   const [ errorReq, setErrorReq ] = useState<AxiosError | null>(null)
+  const [finished, setFinished] = useState<boolean>(false)
+  const [submitTries, setSubmitTries] = useState<number>(0)
 
   const handleFileChange = (info: UploadChangeParam) => {
     const { fileList } = info
@@ -37,19 +64,31 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
   const isButtonDisabled = !file || !title;
 
   const handleClose = () => {
+    setProgress(0)
     setTitle('')
     setFile(null)
+    setMovie(null)
+    setRequest(null)
+    setAxiosCtr(null)
+    setErrorReq(null)
+    setFinished(false)
+    setSubmitTries(0)
     if (onClose) onClose()
   }
 
   const customRequest = (req: UploadRequestOption) => {
-    console.log('File Changed', req.file)
     setRequest(req)
   }
 
   const handleSubmit = async () => {
+    if (movie) {
+      setFinished(true)
+      return
+    }
+
     const { onSuccess, onError, file } = request!
 
+    setSubmitTries(submitTries+1)
     setIsLoading(true)
 
     const formData = new FormData()
@@ -117,6 +156,16 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
     axiosCtr?.abort()
   }
 
+  const handleRetry = (e:React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log('Retry', errorReq)
+    setAxiosCtr(null)
+    setErrorReq(null)
+    handleSubmit()
+  }
+
+
   return (
     <Modal
       open={open}
@@ -129,24 +178,26 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
       transitionName="ant-modal-slide-up"
       maskTransitionName="ant-modal-mask-slide-up"
     >
+    {
+      finished ? (
+        <StepFinished movie={new MovieDto()} onClose={handleClose} />
+      ) : (
+        <>
       <h2 className="modal-title">Agregar Película</h2>
 
-      <div className="input-container">
+      <div className="input-container first">
         <Dragger
           { ...uploadProps}
           name="file"
           multiple={false}
           onChange={handleFileChange}
-          className="drag-upload"
+          className={file ? 'drag-upload-ready' : 'drag-upload-choose'}
           showUploadList={false}
           style={{ ...(isLoading ? { border: '0px'} : {}) }}
           >
             {
-              file && request ? (
+              submitTries > 0 ? (
                 <div className="progress-info">
-                  {
-                    
-                  }
                   {
                     movie ? (
                       <>
@@ -157,11 +208,11 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
                       {
                         errorReq ? (
                           <>
-                           <p>¡Error! No se pudo cargar la película</p>
+                           <p><b>¡Error!</b> No se pudo cargar la película</p>
                           </>
                         ) : (
                           <>
-                           <p>Cargando { progress  }%</p>
+                           <p>Cargando { progress  }% </p>
                           </>
                         )
                       }
@@ -169,7 +220,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
                     )
                   }
                   
-                  <Progress percent={errorReq ? 100 : progress} showInfo={false} className={`${errorReq ? 'progress-error' : ''}`} />
+                  <Progress percent={isLoading ? progress : 100 } showInfo={false} className={`${errorReq ? 'progress-error' : ''}`} />
                   {
                     axiosCtr?.signal.aborted === true ? (
                       <>
@@ -180,7 +231,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
                        {
                         errorReq ? (
                           <>
-                          <Button type="link" onClick={() => console.log('TODO retry')}>Reintentar</Button>
+                          <Button type="link" onClick={handleRetry}>Reintentar</Button>
                           </>
                         ) : (
                           <>
@@ -196,7 +247,15 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
                 <>
                   <p className="ant-upload-text">
                     <PaperClipOutlined />
-                    Agregá un archivo o arrástralo y soltalo aqui
+                    {
+                      file ? (
+                        <>
+                        { file?.name }
+                        </>
+                      ) : (
+                        <>Agregá un archivo o arrástralo y soltalo aqui</>
+                      )
+                    }
                   </p>
                 </>
               )
@@ -212,17 +271,21 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
-
+      
       <div className="input-container">
         <Button
-          className={`upload-button ${isButtonDisabled ? '' : 'upload-button-valid'}`}
+          className={`upload-button ${isButtonDisabled || errorReq !== null ? '' : 'upload-button-valid'}`}
           type="primary"
-          disabled={isButtonDisabled}
+          disabled={isButtonDisabled || errorReq !== null}
           onClick={handleSubmit}
           >
-          Subir Película
+          { movie ? 'Guardar' : 'Subir Película'}
         </Button>
       </div>
+      </>
+    )
+  }
+      
     </Modal>
   )
 }
