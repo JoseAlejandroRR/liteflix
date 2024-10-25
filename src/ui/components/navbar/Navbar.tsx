@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
-import { AiOutlinePlus, AiOutlineMenu, AiOutlineBell } from 'react-icons/ai'
+import { AiOutlinePlus } from 'react-icons/ai'
 import MenuNavigationDrawer from '../modals/NavigationMenuDrawer/MenuNavigationDrawer'
 import UserAvatar from '../modals/user-avatar/UserAvatar'
 import MovieUploadModal from '../modals/MovieUploadModal/MovieUploadModal'
+import MenuIcon from './../../../assets/menu.svg?react'
+import BellIcon from './../../../assets/bell-icon.svg?react'
+import BellDotIcon from './../../../assets/bell-dot-icon.svg?react'
 
 import './Navbar.scss'
 
 const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false)
   const [showForm, setShowForm] = useState<boolean>(false)
+  const [notificationList] = useState([{}])
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -34,11 +38,13 @@ const Navbar: React.FC = () => {
       <div className="actions">
         <ul className="left-actions">
           <li className="action-add"><a href="#" onClick={handleShowForm}><AiOutlinePlus/> Agregar Película</a></li>
-          <li className="action-menu"><a href="#"><AiOutlineMenu/></a></li>
+          <li className="action-menu"><a href="#" onClick={toggleMenu}><MenuIcon/></a></li>
         </ul>
         <ul className="right-actions">
-          <li className="action-menu"><a href="#" onClick={toggleMenu}><AiOutlineMenu/></a></li>
-          <li className="action-notifications"><a href="#"><AiOutlineBell/></a></li>
+          <li className="action-menu"><a href="#" onClick={toggleMenu}><MenuIcon/></a></li>
+          <li className="action-notifications">
+            <a href="#"> { notificationList.length > 0 ? (<BellDotIcon />) : (<BellIcon />) } </a>
+          </li>
           <li className="action-avatar">
           <UserAvatar />
           </li>

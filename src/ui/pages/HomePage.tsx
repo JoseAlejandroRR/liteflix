@@ -3,17 +3,17 @@ import { useEffect } from 'react'
 import MainMovieSection from '../components/main-movie/MainMoviewSection'
 import Navbar from '../components/navbar/Navbar'
 import PopularMoviesList from '../components/popular-movies-list/PopularMoviesList'
-import { useMoviesPopular } from '../../data/hooks/useMoviesPopular'
+import { useMoviesFeatured } from '../../data/hooks/useMoviesFeatured'
 
 import './HomePage.scss'
 
 const HomePage: React.FC =  () => {
-  const { movies: moviesHighligh, getHighlightMovies } = useMoviesPopular()
+  const { movies: moviesFeatured, getMovies: getFeaturedMovies } = useMoviesFeatured()
 
-  const moviesSize = 4
+  const moviesSize = Number(import.meta.env.VITE_MOVIES_FEATURED_LIMIT ?? 5)
 
   useEffect(() => {
-    getHighlightMovies()
+    getFeaturedMovies()
   }, [])
 
   return (
@@ -21,8 +21,8 @@ const HomePage: React.FC =  () => {
       <div className="home-page">
         <Navbar />
         <div className="content">
-          <MainMovieSection movies={moviesHighligh.slice(0, moviesSize)} />
-          <PopularMoviesList movies={moviesHighligh.slice(0, moviesSize)} />
+          <MainMovieSection movies={moviesFeatured.slice(0, moviesSize)} />
+          <PopularMoviesList length={moviesSize} />
         </div>
       </div>
     </>

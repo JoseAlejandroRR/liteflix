@@ -1,19 +1,15 @@
 import React from 'react'
-import { PiPlay } from 'react-icons/pi'
 
 
 import './ButtonPlay.scss'
 
 type ButtonPlay = {
-  style?: React.CSSProperties
+  size?: 'icon' | 'xl'
 }
 
-const ButtonPlay: React.FC<ButtonPlay> = ({ style }) => {
+const ButtonPlay: React.FC<ButtonPlay> = ({ size }) => {
   return (
-    <button className="play-button" style={style}>
-      <PiPlay />
-      <div className="triangle"></div>
-    </button>
+    <button className={`play-button ${size === 'xl' ? 'xl-btn' : ''}`} />
   )
 }
 

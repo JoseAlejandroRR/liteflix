@@ -9,22 +9,27 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+
   return (
     <div className="movie-card">
       <div className="image-container">
         <img src={movie.thumbnailURL} alt={movie.title} className="movie-image" />
         <div className="overlay">
-            <ButtonPlay />
+            <ButtonPlay size="xl" />
             <h3 className="movie-title">{movie.title.toUpperCase()}</h3>
         </div>
         <div className="movie-info">
           <div className="movie-details">
-            <ButtonPlay style={{ width: 24, height:24 }}/>
+            <ButtonPlay/>
             <h3 className="movie-title">{movie.title.toUpperCase()}</h3>
           </div>
            <div className="info-extra">
-            <span className="movie-rating">★ { movie.voteAverage }</span>
-            <span className="movie-year">2019</span>
+            <span className="movie-rating">
+              { movie.voteAverage ? `★ ${movie.voteAverage.toFixed(1)}` : '' }
+            </span>
+            <span className="movie-year">
+            { movie.releasedAt ? `${movie.releasedAt.getFullYear()}` : '' }
+            </span>
           </div>
         </div>
       </div>

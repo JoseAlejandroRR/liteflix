@@ -10,24 +10,29 @@ export type DropdownMenuItem = {
 }
 
 type DropdownMenuProps = {
-  menu: DropdownMenuItem[]
+  menu: DropdownMenuItem[],
+  defaultValue?: DropdownMenuItem, 
+  onSelected?: (item: DropdownMenuItem) => void
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ menu }) => {
-  const [selected, setSelected] = useState('Populares');
+const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  menu, defaultValue, onSelected
+}) => {
+  const [selected, setSelected] = useState<DropdownMenuItem>(defaultValue ?? menu[0]);
 
-  const handlerClick = (key: string) => {
-    setSelected(key)
+  const handlerClick = (item: DropdownMenuItem) => {
+    setSelected(item)
+    if (onSelected) onSelected(item)
   }
 
   const items: MenuProps['items'] = menu.map((item) => ({
     key: item.key,
     label:  (
       <span>
-        { item.label } {selected === item.label && <CheckOutlined />}
+        { item.label } {selected.key === item.key && <CheckOutlined />}
       </span>
     ),
-    onClick: () => handlerClick(item.label) 
+    onClick: () => handlerClick(item)
   }))
 
   return (
@@ -36,7 +41,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ menu }) => {
         <Typography.Text className="item-selected"
           style={{ color: 'white', cursor: 'pointer', textTransform: 'uppercase' }}
           >
-          Ver: <span>{selected}</span> <DownOutlined />
+          Ver: <span>{selected.label}</span> <DownOutlined />
         </Typography.Text>
       </Dropdown>
     </div>

@@ -17,9 +17,8 @@ const MainMovieSection: React.FC<MainMovieSectionProps> = ({ movies }) => {
     const interval = setInterval(() => {
         let newIndex = currentMovie + 1
         if (newIndex >= movies.length) newIndex = 0
-        console.log("ALGO: ", currentMovie)
         setCurrentMovie(newIndex)
-    }, 5000)
+    }, 10000)
     
     return () => clearInterval(interval)
   }, [currentMovie, movies])

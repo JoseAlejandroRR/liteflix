@@ -35,7 +35,7 @@
       padding: 0;
       margin: 0;
       display: flex;
-      gap: 30px;
+      gap: 40px;
 
       li {
         font-size: 28px;
@@ -46,6 +46,18 @@
       color: #fff;
       letter-spacing: 4px;
       font-weight: bold;
+
+      svg {
+        color: #fff;
+      }
+    }
+
+    li.action-menu {
+      display: block;
+
+      svg {
+        margin-top: 5px;
+      }
     }
 
     .left-actions {
@@ -56,7 +68,7 @@
 
     .right-actions {
       display: flex;
-      gap: 30px;
+      gap: 40px;
 
       a {
         font-weight: 400;
@@ -76,6 +88,10 @@
 
     .left-actions li.action-menu {
       display: block !important;
+
+      svg {
+        margin-top: 2px;
+      }
     }
 
     .right-actions {

@@ -1,5 +1,12 @@
 .navigation-menu-drawer {
-  background-color: #242424 !important;
+  background-color: rgba(36, 36, 36) !important;
+  padding-top: 20px;
+  padding-right: 60px;
+  padding-left: 40px;
+
+  .ant-space {
+    gap: 30px !important;
+  }
 
   button {
     border: 0;
@@ -8,6 +15,22 @@
 
     &.action-btn {
       font-size: 26px !important;
+    }
+  }
+}
+
+@media (width < 768px) {
+  .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+}
+
+@media (width > 768px) {
+  .ant-drawer-content-wrapper {
+    width: 50% !important;
+
+    .navigation-menu-drawer {
+      background-color: rgba(36, 36, 36, 0.9) !important;
     }
   }
 }

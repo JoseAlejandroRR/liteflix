@@ -2,6 +2,7 @@
 export class MovieDto {
   id?: number
   title!: string
+  description?: string
   imageURL!: string
   thumbnailURL?: string
   voteCount?: number
@@ -15,8 +16,11 @@ export class MovieDto {
     Object.assign(movie, {
       id: data.id,
       title: data.title,
-      imageURL: `https://image.tmdb.org/t/p/original${data.imageURL}`,
-      thumbnailURL: `https://image.tmdb.org/t/p/w500${data.thumbnailURL}`
+      description: data.description,
+      voteAverage: data.voteAverage,
+      imageURL: data.imageURL,
+      thumbnailURL: data.thumbnailURL,
+      releasedAt: data.releasedAt,
     })
 
     return movie

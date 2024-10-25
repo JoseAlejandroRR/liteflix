@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { MovieDto } from '../dto/MovieDto'
-import MoviesPopularAPI from '../services/MoviesPopularAPI'
+import MoviesHighlightAPI from '../services/MoviesHighlightAPI'
 
-const moviesApi = new MoviesPopularAPI()
+const moviesApi = new MoviesHighlightAPI()
 
-export const useMoviesPopular = () => {
+export const useMoviesFeatured = () => {
   const [movies, setMovies] = useState<MovieDto[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -18,7 +18,7 @@ export const useMoviesPopular = () => {
       setMovies(movies)
     } catch (err) {
       setError((err as Error).message)
-      console.log('[useMoviesPopular.getMovies]: Error: ', err)
+      console.log('[useMoviesFeatured.getMovies]: Error: ', err)
     } finally {
       setLoading(false)
     }

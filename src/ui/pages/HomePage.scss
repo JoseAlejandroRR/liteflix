@@ -47,7 +47,7 @@
 
   h1 {
     color: #64EEBC;
-    font-size: 120px;
+    font-size: 80px;
     font-weight: 700;
     letter-spacing: 16px;
     margin: 0;
@@ -77,10 +77,15 @@
 .sidebar-popular-movies {
   position: absolute;
   right: 0;
-  top: 50%;
-  width: 20%;
+  top: 100px;
   max-width: 260px;
   z-index: 10;
+
+  .ant-spin {
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 30px 0;
+  }
 }
 
 .sidebar-popular-movies ul {
@@ -202,11 +207,23 @@
   }
 }
 
+@media (width > 1200px) {
+  .main-movie .movie-info {
+    width: calc(100% - 200px);
+
+    h1 {
+      font-size: 120px;
+    }
+  }
+}
+
+
+
 @media (width > 768px) {
   .main-movie .movie-info {
     bottom: 140px;
     left: 100px;
-    width: calc(100% - 200px);
+    width: calc(75% - 200px);
 
     .buttons {
       .animated-button {
@@ -217,6 +234,5 @@
 
   .sidebar-popular-movies {
     right: 100px;
-    transform: translateY(-50%);
   }
 }

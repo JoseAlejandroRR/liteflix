@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { MovieDto } from '../../../data/dto/MovieDto'
 import { AnimationBox } from '../animations/AnimationBox'
 import { PiPlay } from 'react-icons/pi'

@@ -1,14 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MovieCard from '../movie-card/MovieCard'
 import DropdownMenu, { DropdownMenuItem } from '../dropdown-menu/DropdownMenu'
 import { AnimationBox } from '../animations/AnimationBox'
-import { MovieDto } from '../../../data/dto/MovieDto'
+import { useMoviesPopular } from '../../../data/hooks/useMoviesPopular'
+import { useMyMovies } from '../../../data/hooks/useMyMovies'
+import { Spin } from 'antd'
 
 type PopularMoviesList = {
-  movies: MovieDto[]
+  length: number
 }
 
-const PopularMoviesList: React.FC<PopularMoviesList> = ({ movies }) => {
+const items: DropdownMenuItem[] = [
+  {
+    key: '1', label: 'Populares'
+  },
+  {
+    key: '2', label: 'Mis Películas'
+  },
+]
+
+const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
+  const { movies: moviesPopular, loading: loadingPopular, getMovies: getPopularMovies } = useMoviesPopular()
+  const { movies: myMovies, loading: loadingMyMovies, getMovies: getMyMovies } = useMyMovies()
+  const [ category, setCategory ] = useState<DropdownMenuItem>(items[0])
+
+  const movies = category.key === items[0].key ? moviesPopular : myMovies
+
+  const isLoading = loadingMyMovies || loadingPopular
+
+  console.log(loadingMyMovies, loadingPopular)
+
+  useEffect(() => {
+    if (category.key === items[0].key) {
+      getPopularMovies()
+      return
+    }
+
+    if (category.key === items[1].key) {
+      getMyMovies()
+      return
+    }
+  }, [category])
+
   /*const popularMovies = [
     { title: 'HOUSE OF CARDS', image: 'https://occ-0-8407-2219.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABfDBXd9joUxbI6ThPWavzQ753B-EtfISnu7-pGrxSnRBTF37Pw_KXXTHkIglVudu_aycJzyfD8ftoyeuQDVo5tIvMUdLvsvIzAslTHptQ1SwCXX2QcVijxE2dA.jpg?r=43d' },
     { title: 'THE ETERNAL SUNSHINE OF A MIND', image: 'https://media.self.com/photos/5969182f9bf47f696c418d39/master/pass/game-of-thrones-final.jpg' },
@@ -16,23 +49,26 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ movies }) => {
     { title: 'MARSEILLE', image: 'https://image.tmdb.org/t/p/w500/3m0j3hCS8kMAaP9El6Vy5Lqnyft.jpg' },
   ]*/
 
-  const items: DropdownMenuItem[] = [
-    {
-      key: '1', label: 'Populares'
-    },
-    {
-      key: '2', label: 'Mis Películas'
-    },
-  ]
+  const handleCategorySelected = (item: DropdownMenuItem) => {
+    console.log("SELECTED: ", item)
+    setCategory(item)
+  }
 
   return (
     <aside className="sidebar-popular-movies">
-      <DropdownMenu menu={items} />
+      <DropdownMenu defaultValue={items[0]} menu={items} onSelected={handleCategorySelected} />
+      {
+        isLoading && (
+          <>
+            <Spin />
+          </>
+        )
+      }
       <ul>
-        {movies.map((movie, index) => (
-          <li key={index}>
-            <AnimationBox delay={index * 0.1} effect="down-up">
-              <MovieCard key={movie.title} movie={movie} />
+        {movies && movies.slice(0, length).map((movie, index) => (
+          <li key={movie.id}>
+            <AnimationBox delay={index * 0.25} effect="down-up">
+              <MovieCard key={movie.id} movie={movie} />
             </AnimationBox>
           </li>
         ))}

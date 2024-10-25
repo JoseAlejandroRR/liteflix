@@ -1,7 +1,7 @@
 .play-button {
   width: 40px;
   height: 40px;
-  border: 1.8px solid #fff;
+  border: 0px solid #fff;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   display: flex;
@@ -9,10 +9,20 @@
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background: url('/assets/play-btn.svg') center center no-repeat;
+
+  &.xl-btn {
+    background: url('/assets/play-xl-btn.svg') center center no-repeat;
+
+    &:hover {
+      background: url('/assets/play-hover-xl-btn.svg') center center no-repeat;
+    }
+  }
 }
 
 .play-button:hover {
   background-color: #64EEBC;
+  background: url('/assets/play-hover-btn.svg') center center no-repeat;
 }
 
 .triangle {

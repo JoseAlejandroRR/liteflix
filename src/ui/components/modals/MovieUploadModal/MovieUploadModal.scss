@@ -1,13 +1,14 @@
 .movie-upload-modal {
   width: 700px;
 
-  .close-icon {
+  .ant-modal-close-x {
     color: #fff;    
   }
 
   .ant-modal-content {
     background-color: #242424;
-    padding: 60px;
+    padding: 20px;
+    padding-bottom: 40px;
     text-align: center;
 
     h2 {
@@ -20,9 +21,11 @@
     .ant-upload-wrapper {
       
       .ant-upload-drag {
+        background-color: transparent;
         border-radius: 0px;
         position: relative;
         padding: 20px;
+        padding-bottom: 0px;
       }
 
       .ant-upload-text {
@@ -31,11 +34,56 @@
         color: #fff;
       }
 
+      .progress-info {
+        font-family: 'Bebas Neue', sans-serif;
+        font-weight: 400;
+        letter-spacing: 4px;
+        font-size: 16px;
+
+        p {
+          text-align: left;
+          color: #fff;
+          margin-bottom: 0px;
+        }
+
+        .ant-progress-inner {
+          height: 4px;
+          overflow: visible;
+          background-color: #919191;
+        }
+
+        .ant-progress-bg {
+          background-color: #64EEBC;
+          border-radius: 0;
+          margin-top: -2px;
+        }
+
+        .ant-progress.progress-error {
+
+          .ant-progress-bg {
+            background-color: #FF0000;
+          }
+        }
+
+        button {
+          float: right;
+          color: #fff;
+          letter-spacing: 4px;
+          font-size: 16px;
+          font-weight: bold;
+          padding: 0px;
+        }
+      }
+
     }
 
     .input-container {
       margin: 10px auto;
       margin-bottom: 30px;
+    }
+
+    .input-container:first-child {
+      margin-bottom: 10px;
     }
 
     .input-container:last-child {
@@ -53,7 +101,6 @@
       text-align: center;
       font-size: 16px;
       letter-spacing: 4px;
-      text-transform: uppercase;
       font-family: 'Bebas Neue', sans-serif;
 
       &::placeholder {
@@ -72,6 +119,15 @@
       color: #000;
       font-family: 'Bebas Neue', sans-serif;
       padding: 25px 50px;
+
+    }
+
+    .upload-button-valid {
+
+      &:hover {
+        background-color: #fff;
+        color: #242424;
+      }
     }
   }
 }

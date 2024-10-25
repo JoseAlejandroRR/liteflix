@@ -1,8 +1,8 @@
 import React from "react"
 import { Button, Drawer, Space } from 'antd'
 import NavigationMenu from './NavigationMenu'
-import { AiOutlineBell } from 'react-icons/ai'
-import UserAvatar from "../user-avatar/UserAvatar"
+import UserAvatar from '../user-avatar/UserAvatar'
+import BellDotIcon from './../../../../assets/bell-dot-icon.svg?react'
 
 import './MenuNavigationDrawer.scss'
 
@@ -29,7 +29,7 @@ const MenuNavigationDrawer: React.FC<MenuNavigationDrawerProps> = ({
       className="navigation-menu-drawer"
       extra={
         <Space>
-          <Button className="action-btn" icon={<AiOutlineBell />} onClick={() => {}} />
+          <Button className="action-btn" icon={<BellDotIcon />} onClick={() => {}} />
           <UserAvatar />
         </Space>
       }>
