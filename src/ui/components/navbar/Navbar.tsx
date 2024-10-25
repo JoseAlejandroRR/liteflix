@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import MenuNavigationDrawer from '../modals/NavigationMenuDrawer/MenuNavigationDrawer'
 import UserAvatar from '../modals/user-avatar/UserAvatar'
@@ -8,11 +8,14 @@ import BellIcon from './../../../assets/bell-icon.svg?react'
 import BellDotIcon from './../../../assets/bell-dot-icon.svg?react'
 
 import './Navbar.scss'
+import { useMyMovies } from '../../../data/hooks/useMyMovies'
+import Logo from '../logo/Logo'
 
 const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false)
   const [showForm, setShowForm] = useState<boolean>(false)
   const [notificationList] = useState([{}])
+
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -31,9 +34,7 @@ const Navbar: React.FC = () => {
     <>
     <nav className="navbar">
       <div className="logo">
-        <a href="#">
-          <span>LITE</span>FLIX
-        </a>
+        <Logo />
       </div>
       <div className="actions">
         <ul className="left-actions">

@@ -9,8 +9,10 @@ const config: ThemeConfig = {
   token: {
     colorPrimary: '#64EEBC',
     fontFamily: 'Bebas Neue, sans-serif',
-    fontSize: 18
+    fontSize: 18,
+    fontWeightStrong: 400,
   },
+  hashed: true
 };
 
 createRoot(document.getElementById('root')!).render(
