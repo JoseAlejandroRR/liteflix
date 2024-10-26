@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ConfigProvider, ThemeConfig } from 'antd'
 import App from './App.tsx'
+import AuthProvider from './data/hooks/useAuth.tsx'
 
 import './index.css'
 
@@ -13,12 +14,14 @@ const config: ThemeConfig = {
     fontWeightStrong: 400,
   },
   hashed: true
-};
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider theme={config}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ConfigProvider>
   </StrictMode>,
 )

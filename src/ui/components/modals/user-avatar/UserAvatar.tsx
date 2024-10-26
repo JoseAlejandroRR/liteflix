@@ -1,17 +1,20 @@
 import React from 'react'
 import { Avatar, Button, Dropdown, MenuProps } from 'antd'
 import { BiUser } from 'react-icons/bi'
+import { useAuth } from '../../../../data/hooks/useAuth'
 
 const UserAvatar: React.FC = () => {
+  const { logout } = useAuth()
 
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
         <a target="#">
-          My profile
+          Mi Cuenta
         </a>
       ),
+      disabled: true,
     },
     {
       key: '2',
@@ -20,7 +23,7 @@ const UserAvatar: React.FC = () => {
           Logout
         </a>
       ),
-      disabled: true,
+      onClick: logout
     },
   ]
 

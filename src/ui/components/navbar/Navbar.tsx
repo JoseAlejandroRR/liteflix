@@ -16,7 +16,6 @@ const Navbar: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false)
   const [notificationList] = useState([{}])
 
-
   const toggleMenu = () => {
     setShowMenu(!showMenu)
   }
