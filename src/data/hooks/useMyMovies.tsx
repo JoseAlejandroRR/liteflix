@@ -13,7 +13,7 @@ export const useMyMovies = () => {
 
   const getMovies = async (): Promise<MovieDto[]> => {
     let movies: MovieDto[] = []
-
+    setError(null)
     setLoading(true)
     try {
       movies = await liteflixApi.getAllMovies()
@@ -28,8 +28,26 @@ export const useMyMovies = () => {
     return movies
   }
 
+  const getMyMovieList = async (): Promise<MovieDto[]> => {
+    let movies: MovieDto[] = []
+    setError(null)
+    setLoading(true)
+    try {
+      movies = await liteflixApi.getMyMovieList()
+      setMovies(movies)
+    } catch (err) {
+      setError((err as Error).message)
+      console.log('[useMyMovies.getMovies]: Error: ', err)
+    } finally {
+      setLoading(false)
+    }
+
+    return movies
+  }
+
   const addMovie = async (input: CreateMovieDto, file: File, config: any): Promise<MovieDto | null> => {
     setLoading(true)
+    setError(null)
     try {
       const formData = new FormData();
       formData.append('title', input.title);
@@ -65,6 +83,7 @@ export const useMyMovies = () => {
     loading,
     error,
     getMovies,
+    getMyMovieList,
     addMovie,
   }
 }

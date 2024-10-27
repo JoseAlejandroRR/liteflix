@@ -1,4 +1,18 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import AuthSession from '../security/AuthSession'
+
+const getAuthToken = (): AuthSession | null => {
+  try {
+    const authData = localStorage.getItem('auth')
+    if (!authData) return {}
+    const auth:AuthSession = JSON.parse(authData)
+
+    return auth
+  } catch (err) {
+    console.log('[getAuthSession]: localStorage failed')
+  }
+  return null
+}
 
 class BackendService {
   protected api: AxiosInstance
@@ -10,7 +24,15 @@ class BackendService {
         'Content-Type': 'application/json',
       },
     })
+    this.configure()
+  }
 
+  private configure() {
+    const auth = getAuthToken()
+
+    if (auth && auth.token) {
+      this.api.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+    }
   }
 
   protected async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
