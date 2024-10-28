@@ -18,14 +18,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .main-movie .featured-image {
   object-fit: cover;
-  width: 100%;
-  height: 100%;
-  transform: scaleX(-1);
   opacity: 0.5;
+  /*transform: scale(1.2) translate(5% , 0);
+  animation: movingImage 10s ease-in-out infinite;
+
+  @keyframes movingImage {
+    0% {
+    }
+    50% {
+      transform: scale(1.1) translate(2% , 2%);
+    }
+    100% {
+      transform: scale(1.1) translate(-3% , 0%);
+    }
+  }*/
 }
 
 .main-movie .movie-info {
@@ -80,6 +91,14 @@
   top: 100px;
   max-width: 260px;
   z-index: 10;
+  opacity: 0;
+  animation: sideAnimation 2s ease-in-out forwards 0.5s;
+
+  @keyframes sideAnimation {
+    to{
+      opacity:1;
+    }
+  }
 
   .ant-spin {
     left: 50%;

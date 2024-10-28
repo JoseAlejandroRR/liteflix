@@ -3,7 +3,6 @@ import { Modal, Upload, Input, Button, Progress } from 'antd'
 import { PaperClipOutlined } from '@ant-design/icons'
 import { TfiClose } from "react-icons/tfi";
 import { UploadChangeParam, UploadProps } from 'antd/es/upload'
-import { UploadRequestOption } from 'rc-upload/lib/interface'
 import LiteflixAPI from '../../../../data/services/LiteflixAPI'
 import { MovieDto } from '../../../../data/dto/MovieDto'
 import { AxiosError, AxiosRequestConfig } from 'axios'
@@ -80,7 +79,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
     if (onClose) onClose()
   }
 
-  const customRequest = (req: UploadRequestOption) => {
+  const customRequest = () => {
     //setRequest(req)
     handleSubmit()
   }

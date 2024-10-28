@@ -6,11 +6,12 @@ export type AnimationBoxProps = {
   children?: string | JSX.Element | JSX.Element[],
   duration?: number,
   delay?: number,
-  effect?: 'normal' | 'up-down' | 'down-up'
+  effect?: 'normal' | 'up-down' | 'down-up',
+  style?: React.CSSProperties
 }
 
 export const AnimationBox: React.FC<AnimationBoxProps> = ({
-  children, duration, delay, effect,
+  children, duration, delay, effect, style
 }) => {
 
   let classes = `text-animation-box`
@@ -23,7 +24,7 @@ export const AnimationBox: React.FC<AnimationBoxProps> = ({
   }
 
   return (
-    <div className="text-animation">
+    <div className="text-animation" style={style}>
         <div className={classes} style={{
             animationDelay: `${delay ?? 0.5}s`,
             animationDuration: `${duration ?? 1}s`,

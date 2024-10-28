@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MovieCard from '../movie-card/MovieCard'
 import DropdownMenu, { DropdownMenuItem } from '../dropdown-menu/DropdownMenu'
-import { AnimationBox } from '../animations/AnimationBox'
 import { useMoviesPopular } from '../../../data/hooks/useMoviesPopular'
 import { useMyMovies } from '../../../data/hooks/useMyMovies'
 import { notification, Spin } from 'antd'
@@ -78,9 +77,7 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
       <ul>
         {movies && movies.slice(0, length).map((movie, index) => (
           <li key={movie.id}>
-            <AnimationBox delay={index * 0.25} effect="down-up">
-              <MovieCard key={movie.id} movie={movie} />
-            </AnimationBox>
+              <MovieCard key={movie.id} movie={movie} index={index} />
           </li>
         ))}
       </ul>

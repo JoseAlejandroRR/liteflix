@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar, Button, Dropdown, MenuProps } from 'antd'
 import { BiUser } from 'react-icons/bi'
-import { useAuth } from '../../../../data/hooks/useAuth'
+import { useAuth } from '../../../../data/hooks/useAuth'
 
 const UserAvatar: React.FC = () => {
   const { logout } = useAuth()

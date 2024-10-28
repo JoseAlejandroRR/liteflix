@@ -27,6 +27,7 @@ const LoginPage: React.FC = () => {
       getAuthToken(values.email, values.password)
     } catch(err) {
       notification.error({ message: 'Servicios no disponible', placement: 'bottomRight' })
+      console.error(err)
     }
   }
 

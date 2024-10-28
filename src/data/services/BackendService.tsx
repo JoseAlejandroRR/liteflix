@@ -9,7 +9,7 @@ const getAuthToken = (): AuthSession | null => {
 
     return auth
   } catch (err) {
-    console.log('[getAuthSession]: localStorage failed')
+    console.log('[getAuthSession]: localStorage failed:', err)
   }
   return null
 }

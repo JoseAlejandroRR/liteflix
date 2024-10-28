@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import MenuNavigationDrawer from '../modals/NavigationMenuDrawer/MenuNavigationDrawer'
 import UserAvatar from '../modals/user-avatar/UserAvatar'
@@ -6,11 +6,10 @@ import MovieUploadModal from '../modals/MovieUploadModal/MovieUploadModal'
 import MenuIcon from './../../../assets/menu.svg?react'
 import BellIcon from './../../../assets/bell-icon.svg?react'
 import BellDotIcon from './../../../assets/bell-dot-icon.svg?react'
+import { useAuth } from '../../../data/hooks/useAuth'
+import Logo from '../logo/Logo'
 
 import './Navbar.scss'
-import { useMyMovies } from '../../../data/hooks/useMyMovies'
-import Logo from '../logo/Logo'
-import { useAuth } from '../../../data/hooks/useAuth'
 
 const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false)

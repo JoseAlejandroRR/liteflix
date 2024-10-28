@@ -1,6 +1,6 @@
 .main-movie {
   opacity: 0;
-  animation: fadeInOut 5s ease-in-out infinite; 
+  animation: fadeInOut 10s ease-in-out infinite;
    
   @keyframes fadeInOut {
     0% {
@@ -145,8 +145,9 @@
     z-index: 1;
     position: absolute;
     left: 0;
-    animation: smooth-appear 0.5s ease-in-out forwards;
+    animation: smooth-appear 0.5s ease-in-out forwards 1s;
   }
+
 
   &:hover {
    
@@ -165,7 +166,7 @@
       color: #fff;
       z-index: 5;
       opacity: 0;
-      animation: smooth-appear-text 1s ease forwards 0.4s;
+      animation: smooth-appear-text 1s ease forwards 1s;
       align-items: center;
       justify-content: center;
       transition: color 0.5s;
@@ -196,9 +197,10 @@
   height: 100%;
   width: 1px;
   left: 0;
+  border: 0;
   bottom: 0;
-  opacity: 1;
-  animation: grow-left-border 0.2s forwards ease;
+  opacity: 0;
+  animation: grow-left-border 0.2s forwards ease 1.5s;
 }
 
 .animated-button-with-boders::after {
@@ -206,8 +208,9 @@
   height: 1px;
   left: 0;
   bottom: 0;
-  opacity: 1;
-  animation: grow-bottom-border 0.4s forwards;
+  opacity: 0;
+  border: 0;
+  animation: grow-bottom-border 0.4s forwards 1.5s;
 }
 
 .animated-button-with-boders div::before {
@@ -216,7 +219,7 @@
   right: 0;
   bottom: 0;
   opacity: 0;
-  animation: grow-left-border 0.3s forwards 0.3s;
+  animation: grow-left-border 0.3s forwards 1.8s;
 }
 
 .animated-button-with-boders div::after {
@@ -225,7 +228,7 @@
   left: 0;
   top: 0;
   opacity: 0;
-  animation: grow-bottom-border 0.4s forwards 0.2s;
+  animation: grow-bottom-border 0.4s forwards 1.7s;
 }
 
 @keyframes grow-left-border {
