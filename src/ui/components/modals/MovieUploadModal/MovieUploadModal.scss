@@ -167,6 +167,8 @@
     .step-finished {
       margin-top: 10px;
       color: #fff;
+      opacity: 0;
+      animation: fadeInOut 10s ease-in-out forwards;
 
       .logo {
         margin-top: 40px;

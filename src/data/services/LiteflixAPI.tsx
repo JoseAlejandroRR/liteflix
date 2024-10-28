@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios'
 import { MovieDto } from '../dto/MovieDto'
 import BackendService from './BackendService'
+import { UpdateMovieDto } from '../dto/UpdateMovieDto'
 
 class LiteflixAPI extends BackendService {
 
@@ -37,7 +38,7 @@ class LiteflixAPI extends BackendService {
         id: item.id,
         title: item.title,
         description: item.description,
-        releasedAt: new Date(item.releasedAt),
+        releasedAt: item.releasedAt ? new Date(item.releasedAt) : undefined,
         voteAverage: item.rating,
         imageURL: item.imageURL,
         thumbnailURL: item.thumbnailURL,
@@ -58,6 +59,8 @@ class LiteflixAPI extends BackendService {
         title: result.title,
         description: result.description,
         imageURL: result.imageURL,
+        voteAverage: result.rating ?? undefined,
+        releasedAt: result.releasedAt ? new Date(result.releasedAt) : undefined,
         thumbnailURL: result.imageURL,
       })
 
@@ -67,6 +70,32 @@ class LiteflixAPI extends BackendService {
     return null
   }
 
+  async updateMovie(movieId: string, input: UpdateMovieDto): Promise<MovieDto | null> {
+
+    const result = await this.put<Record<string, any>>(`/movies/${movieId}`, {
+      title: input.title,
+      description: input.description,
+      rating: input.voteAverage,
+      releasedAt: input.releasedAt,
+      status: input.status
+    })
+
+    if (result.id) {
+      const movie = MovieDto.create({
+        id: result.id,
+        title: result.title,
+        description: result.description,
+        voteAverage: result.rating ?? undefined,
+        releasedAt: result.releasedAt ? new Date(result.releasedAt) : undefined,
+        imageURL: result.imageURL,
+        thumbnailURL: result.imageURL,
+      })
+
+      return movie
+    }
+
+    return null
+  }
 }
 
 export default LiteflixAPI

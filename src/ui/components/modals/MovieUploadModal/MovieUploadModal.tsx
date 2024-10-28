@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import { Modal, Upload, Input, Button, notification, Progress } from 'antd'
+import { Modal, Upload, Input, Button, Progress } from 'antd'
 import { PaperClipOutlined } from '@ant-design/icons'
 import { TfiClose } from "react-icons/tfi";
 import { UploadChangeParam, UploadProps } from 'antd/es/upload'
-import { UploadRequestOption, UploadRequestError } from 'rc-upload/lib/interface'
+import { UploadRequestOption } from 'rc-upload/lib/interface'
 import LiteflixAPI from '../../../../data/services/LiteflixAPI'
 import { MovieDto } from '../../../../data/dto/MovieDto'
 import { AxiosError, AxiosRequestConfig } from 'axios'
 import Logo from '../../logo/Logo'
+import { useAuth } from '../../../../data/hooks/useAuth'
+import MovieStatus from '../../../../data/dto/MovieStatus'
 
 import './MovieUploadModal.scss'
 
@@ -48,12 +50,14 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
   const liteflixApi = new LiteflixAPI()
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const [ progress, setProgress ] = useState<number>(40)
-  const [request, setRequest] = useState<UploadRequestOption | null>(null)
+  //const [request, setRequest] = useState<UploadRequestOption | null>(null)
   const [ movie, setMovie ] = useState<MovieDto | null>()
   const [ axiosCtr, setAxiosCtr ] = useState<AbortController | null>(null)
   const [ errorReq, setErrorReq ] = useState<AxiosError | null>(null)
   const [finished, setFinished] = useState<boolean>(false)
   const [submitTries, setSubmitTries] = useState<number>(0)
+
+  const { auth } = useAuth()
 
   const handleFileChange = (info: UploadChangeParam) => {
     const { fileList } = info
@@ -61,14 +65,14 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
     setFile(fileSelection as File)
   }
 
-  const isButtonDisabled = !file || !title;
+  const isButtonDisabled = !movie || !title;
 
   const handleClose = () => {
     setProgress(0)
     setTitle('')
     setFile(null)
     setMovie(null)
-    setRequest(null)
+    //setRequest(null)
     setAxiosCtr(null)
     setErrorReq(null)
     setFinished(false)
@@ -77,23 +81,17 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
   }
 
   const customRequest = (req: UploadRequestOption) => {
-    setRequest(req)
+    //setRequest(req)
+    handleSubmit()
   }
 
   const handleSubmit = async () => {
-    if (movie) {
-      setFinished(true)
-      return
-    }
-
-    const { onSuccess, onError, file } = request!
 
     setSubmitTries(submitTries+1)
     setIsLoading(true)
 
     const formData = new FormData()
-    formData.append('title', title)
-    formData.append('file', file)
+    formData.append('image', file as File)
 
     const apiRequest = new AbortController()
     setAxiosCtr(apiRequest)
@@ -106,7 +104,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
         let percent = Math.floor((event.loaded / (event.total ?? event.loaded )) * 100);
         percent = percent > 99 ? 0 : percent 
         console.log("PERCENT: ", percent)
-        setProgress(percent)
+        if (percent > 0) setProgress(percent)
       }
     }
 
@@ -115,37 +113,38 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
 
       setMovie(movie)
 
-      console.log("MOVIE: ", movie)
-      if (onSuccess) onSuccess('Done')
     } catch (err) {
       console.log('[handleSubmit]: Error: ', err)
       setErrorReq(err as AxiosError)
-      if (onError) {
-        onError(err as UploadRequestError)
-      }
     }
 
     setIsLoading(false)
   }
 
   const uploadProps: UploadProps = {
-    name: 'file',
-    action: 'http://localhost:8081/api/v1/movies',
+    name: 'image',
+    action: `${import.meta.env.VITE_LITEFLIX_API}/movies`,
     customRequest: customRequest,
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        notification.success({ message: `${info.file.name} file uploaded successfully.` })
-      } else if (status === 'error') {
-        notification.error({ message: `${info.file.name} file upload failed.` })
-      }
+    headers: {
+      'Authorization': `Bearer ${auth.token}`
     },
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files);
     },
+    openFileDialogOnClick: file ? false : true
+  }
+
+  const handleUpdateMovie = async () => {
+    try {
+      const movieUpdated = await liteflixApi.updateMovie(movie!.id!, {
+        title,
+        status: MovieStatus.ACTIVE,
+      })
+      setMovie(movieUpdated)
+      setFinished(true)
+    } catch (err) {
+      console.log('[handleUpdateMovie]: Error', err)
+    }
   }
 
   const handleAbort = (e:React.MouseEvent) => {
@@ -188,18 +187,19 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
       <div className="input-container first">
         <Dragger
           { ...uploadProps}
-          name="file"
+          name="image"
           multiple={false}
           onChange={handleFileChange}
           className={file ? 'drag-upload-ready' : 'drag-upload-choose'}
           showUploadList={false}
+          fileList={[]}
           style={{ ...(isLoading ? { border: '0px'} : {}) }}
           >
             {
-              submitTries > 0 ? (
+             file ? (
                 <div className="progress-info">
                   {
-                    movie ? (
+                    movie?.imageURL ? (
                       <>
                       <p>100% Cargado</p>
                       </>
@@ -247,15 +247,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
                 <>
                   <p className="ant-upload-text">
                     <PaperClipOutlined />
-                    {
-                      file ? (
-                        <>
-                        { file?.name }
-                        </>
-                      ) : (
                         <>Agregá un archivo o arrástralo y soltalo aqui</>
-                      )
-                    }
                   </p>
                 </>
               )
@@ -277,9 +269,9 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
           className={`upload-button ${isButtonDisabled || errorReq !== null ? '' : 'upload-button-valid'}`}
           type="primary"
           disabled={isButtonDisabled || errorReq !== null}
-          onClick={handleSubmit}
+          onClick={handleUpdateMovie}
           >
-          { movie ? 'Guardar' : 'Subir Película'}
+            Subir Película
         </Button>
       </div>
       </>

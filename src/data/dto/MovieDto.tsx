@@ -1,6 +1,7 @@
+import MovieStatus from './MovieStatus'
 
 export class MovieDto {
-  id?: number
+  id?: string
   title!: string
   description?: string
   imageURL!: string
@@ -8,6 +9,7 @@ export class MovieDto {
   voteCount?: number
   voteAverage?: number
   releasedAt?: Date
+  status?: MovieStatus
   language?: 'en' |'es' | 'pt' | 'fr'
 
   static create(data: MovieDto) {
@@ -20,6 +22,7 @@ export class MovieDto {
       voteAverage: data.voteAverage,
       imageURL: data.imageURL,
       thumbnailURL: data.thumbnailURL,
+      status: data.status,
       releasedAt: data.releasedAt,
     })
 

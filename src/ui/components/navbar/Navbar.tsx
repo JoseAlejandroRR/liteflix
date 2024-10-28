@@ -10,11 +10,14 @@ import BellDotIcon from './../../../assets/bell-dot-icon.svg?react'
 import './Navbar.scss'
 import { useMyMovies } from '../../../data/hooks/useMyMovies'
 import Logo from '../logo/Logo'
+import { useAuth } from '../../../data/hooks/useAuth'
 
 const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false)
   const [showForm, setShowForm] = useState<boolean>(false)
   const [notificationList] = useState([{}])
+  const { auth } = useAuth()
+
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -45,7 +48,7 @@ const Navbar: React.FC = () => {
           <li className="action-notifications">
             <a href="#"> { notificationList.length > 0 ? (<BellDotIcon />) : (<BellIcon />) } </a>
           </li>
-          <li className="action-avatar">
+          <li className="action-avatar" title={auth.user?.firstname}>
           <UserAvatar />
           </li>
         </ul>
