@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { MovieDto } from '../dto/MovieDto'
 import BackendService from './BackendService'
 import { UpdateMovieDto } from '../dto/UpdateMovieDto'
@@ -79,6 +79,7 @@ class LiteflixAPI extends BackendService {
       description: input.description,
       rating: input.voteAverage,
       releasedAt: input.releasedAt,
+      thumbnailURL: input.thumbnailURL,
       status: input.status
     })
 
@@ -97,6 +98,17 @@ class LiteflixAPI extends BackendService {
     }
 
     return null
+  }
+
+  async generateThumbnail(imageURL: string,): Promise<string | null> {
+    const result = await this.get<Record<string, any>>(`/`, {
+      params: {
+        imageURL
+      },
+      baseURL:import.meta.env.VITE_LITEFLIX_LAMBDA_IMAGES
+    })
+
+    return result?.thumbnailURL ?? null
   }
 }
 

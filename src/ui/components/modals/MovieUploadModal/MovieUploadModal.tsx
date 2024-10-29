@@ -79,7 +79,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
     if (onClose) onClose()
   }
 
-  const customRequest = () => {
+  const customRequest = async () => {
     //setRequest(req)
     handleSubmit()
   }
@@ -110,7 +110,12 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
     try {
       const movie = await liteflixApi.createMovie(formData, config)
 
-      setMovie(movie)
+      if (!movie) return
+      const fileName = movie.imageURL?.split(`${import.meta.env.VITE_AWS_BUCKET_PUBLIC_URL}/`)
+      const thumbnailURL = await liteflixApi.generateThumbnail(fileName![1])
+      movie.thumbnailURL = thumbnailURL!
+
+      setMovie({...movie })
 
     } catch (err) {
       console.log('[handleSubmit]: Error: ', err)
@@ -138,6 +143,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
       const movieUpdated = await liteflixApi.updateMovie(movie!.id!, {
         title,
         status: MovieStatus.ACTIVE,
+        thumbnailURL: movie?.thumbnailURL
       })
       setMovie(movieUpdated)
       setFinished(true)
@@ -269,6 +275,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
           type="primary"
           disabled={isButtonDisabled || errorReq !== null}
           onClick={handleUpdateMovie}
+          loading={isLoading}
           >
             Subir Película
         </Button>
