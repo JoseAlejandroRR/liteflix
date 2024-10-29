@@ -35,29 +35,43 @@ class BackendService {
     }
   }
 
+  private prepareRequest(config: AxiosRequestConfig = {}): AxiosRequestConfig {
+    const auth = getAuthToken()
+
+    if (auth && auth.token) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${auth.token}`,
+      }
+    }
+
+    return config
+  }
+
+
   protected async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.api.get<T>(url, config)
+    const response = await this.api.get<T>(url, this.prepareRequest(config))
     return response.data
   }
 
   protected async post<T>(url: string, data: any, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.api.post<T>(url, data, config)
+    const response = await this.api.post<T>(url, data, this.prepareRequest(config))
     return response.data
   }
 
   protected async put<T>(url: string, data: any, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.api.put<T>(url, data, config)
+    const response = await this.api.put<T>(url, data, this.prepareRequest(config))
     return response.data
   }
 
   protected async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.api.delete<T>(url, config)
+    const response = await this.api.delete<T>(url, this.prepareRequest(config))
     return response.data
   }
 
   protected async download(url: string, config?: AxiosRequestConfig) {
     const response = await this.api.get(url, {
-      ...config,
+      ...this.prepareRequest(config),
       responseType: 'blob',
     })
 

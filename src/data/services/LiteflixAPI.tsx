@@ -20,7 +20,9 @@ class LiteflixAPI extends BackendService {
         title: item.title,
         description: item.description,
         imageURL: item.imageURL,
-        thumbnailURL: item.imageURL,
+        thumbnailURL: item.thumbnailURL,
+        releasedAt: item.releasedAt ? new Date(item.releasedAt) : undefined,
+        voteAverage: item.rating,
       })
       movies.push(movie)
     })
@@ -61,7 +63,7 @@ class LiteflixAPI extends BackendService {
         imageURL: result.imageURL,
         voteAverage: result.rating ?? undefined,
         releasedAt: result.releasedAt ? new Date(result.releasedAt) : undefined,
-        thumbnailURL: result.imageURL,
+        thumbnailURL: result.thumbnailURL,
       })
 
       return movie
