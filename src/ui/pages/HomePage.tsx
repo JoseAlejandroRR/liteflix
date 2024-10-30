@@ -64,8 +64,6 @@ const HomePage = () => {
       {
         isReady ? (
           <>
-            <LoaderImagesEager onLoad={() => {}}
-            imageUrls={moviesFeatured.slice(1, moviesSize).map((movie) => movie.imageURL)} />
           </>
         ) : (
           <div className="home-page-loading">
@@ -76,5 +74,7 @@ const HomePage = () => {
    </HomeContext.Provider>
   )
 }
+
+//<LoaderImagesEager onLoad={() => {}} imageUrls={moviesFeatured.slice(1, moviesSize).map((movie) => movie.imageURL)} />
 
 export default HomePage
