@@ -5,8 +5,7 @@ import Navbar from '../components/navbar/Navbar'
 import PopularMoviesList from '../components/popular-movies-list/PopularMoviesList'
 import { useMoviesFeatured } from '../../data/hooks/useMoviesFeatured'
 import { useAuth } from '../../data/hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
-import LoaderImagesEager from '../components/common/ProgressiveImage/usePreloadImages'
+//import { useNavigate } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
 
@@ -33,11 +32,11 @@ const HomePage = () => {
   const [isReady, setIsReady] = useState(false)
   const { movies: moviesFeatured, getMovies: getFeaturedMovies } = useMoviesFeatured()
   const { auth } = useAuth()
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
 
   useEffect(() => {
     if (!auth.token) {
-      navigate('/login')
+      //navigate('/login')
     }
   }, [auth])
 

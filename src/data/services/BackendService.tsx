@@ -3,6 +3,7 @@ import AuthSession from '../security/AuthSession'
 
 const getAuthToken = (): AuthSession | null => {
   try {
+    if (!(typeof window !== 'undefined')) return null
     const authData = localStorage.getItem('auth')
     if (!authData) return {}
     const auth:AuthSession = JSON.parse(authData)
