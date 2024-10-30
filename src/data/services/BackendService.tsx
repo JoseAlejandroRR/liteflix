@@ -1,10 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import AuthSession from '../security/AuthSession'
+import storageService from './StorageService'
 
 const getAuthToken = (): AuthSession | null => {
   try {
     if (!(typeof window !== 'undefined')) return null
-    const authData = localStorage.getItem('auth')
+    const authData = storageService.getItem('auth')
     if (!authData) return {}
     const auth:AuthSession = JSON.parse(authData)
 

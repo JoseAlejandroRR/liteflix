@@ -6,7 +6,6 @@ import MovieUploadModal from '../modals/MovieUploadModal/MovieUploadModal'
 import MenuIcon from './../../../assets/menu.svg?react'
 import BellIcon from './../../../assets/bell-icon.svg?react'
 import BellDotIcon from './../../../assets/bell-dot-icon.svg?react'
-import { useAuth } from '../../../data/hooks/useAuth'
 import Logo from '../logo/Logo'
 
 import './Navbar.scss'
@@ -15,8 +14,6 @@ const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false)
   const [showForm, setShowForm] = useState<boolean>(false)
   const [notificationList] = useState([{}])
-  const { auth } = useAuth()
-
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -45,9 +42,9 @@ const Navbar: React.FC = () => {
         <ul className="right-actions">
           <li className="action-menu"><a href="#" onClick={toggleMenu}><MenuIcon/></a></li>
           <li className="action-notifications">
-            <a href="#"> { notificationList.length > 0 ? (<BellDotIcon />) : (<BellIcon />) } </a>
+            <a href="#" aria-label="Ver notificaciones"> { notificationList.length > 0 ? (<BellDotIcon />) : (<BellIcon />) } </a>
           </li>
-          <li className="action-avatar" title={auth.user?.firstname}>
+          <li className="action-avatar">
           <UserAvatar />
           </li>
         </ul>

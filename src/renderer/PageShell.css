@@ -1,3 +1,16 @@
+/* Define la fuente personalizada en @font-face */
+/*@font-face {
+  font-family: 'Bebas Neue';
+  src: url('/assets/fonts/BebasNeue.otf') format('opentype'),
+      url('/assets/fonts/BebasNeue Bold.otf') format('opentype'),
+      url('/assets/fonts/BebasNeue Book.otf') format('opentype'),
+      url('/assets/fonts/BebasNeue Regular.otf') format('opentype'),
+      url('/assets/fonts/BebasNeue-Regular.ttf') format('truetype'),;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}*/
+
 :root {
     line-height: 1.5;
     font-weight: 400;
@@ -29,13 +42,14 @@
     font-family: 'Bebas Neue', sans-serif !important;
     font-size: 18px;
     letter-spacing: 4px;
+    font-display: swap;
   }
   
   h1 {
     font-size: 3.2em;
     line-height: 1.1;
   }
-  
+
   #root {
     margin: 0 auto;
     padding: 0;

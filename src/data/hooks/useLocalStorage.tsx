@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import storageService from '../services/StorageService'
 
 function useLocalStorage<T>(key: string, initialValue: T) {
 
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = window.localStorage.getItem(key)
+      const item = storageService.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
       console.error(error)
@@ -18,7 +19,7 @@ function useLocalStorage<T>(key: string, initialValue: T) {
 
       setStoredValue(valueToStore)
 
-      window.localStorage.setItem(key, JSON.stringify(valueToStore))
+      storageService.setItem(key, JSON.stringify(valueToStore))
     } catch (error) {
       console.error(error)
     }

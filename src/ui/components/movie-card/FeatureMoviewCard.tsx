@@ -24,7 +24,7 @@ const FeaturedMovieCard: React.FC<FeaturedMovieCardProps> = ({ movie }) => {
   return (
     <section className="main-movie">
       <ProgressiveImage className="featured-image" lowResImage={movie.thumbnailURL!} highResImage={movie.imageURL}
-        onLoadHighRes={handlerLoad} />
+        onLoadHighRes={handlerLoad} alt={movie.title} />
       {/*
         isLoading && (
           <>

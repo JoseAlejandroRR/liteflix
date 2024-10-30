@@ -7,7 +7,7 @@ import './Logo.scss'
 const Logo:React.FC = () => {
   return (
     <div className="logo">
-      <a href="#">
+      <a href="#" aria-label="Liteflix">
         <span>LITE</span>FLIX
       </a>
     </div>

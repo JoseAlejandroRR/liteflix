@@ -9,7 +9,7 @@ type ButtonPlay = {
 
 const ButtonPlay: React.FC<ButtonPlay> = ({ size }) => {
   return (
-    <button className={`play-button ${size === 'xl' ? 'xl-btn' : ''}`} />
+    <button aria-label="Play" className={`play-button ${size === 'xl' ? 'xl-btn' : ''}`} />
   )
 }
 

@@ -1,40 +1,44 @@
-// server.mjs
-import express from 'express';
-import { createPageRenderer } from 'vite-plugin-ssr';
+import 'dotenv/config'
+import express from 'express'
+import { renderPage } from 'vite-plugin-ssr/server'
 
-const isProduction = process.env.NODE_ENV === 'production';
-const root = process.cwd();
+const isProduction = process.env.NODE_ENV === 'production'
+const root = process.cwd()
 
 async function startServer() {
-  const app = express();
+  const app = express()
 
-  let viteDevServer;
+  let viteDevServer
   if (!isProduction) {
-    const { createServer } = await import('vite');
+    const { createServer } = await import('vite')
     viteDevServer = await createServer({
       root,
       server: { middlewareMode: 'ssr' },
-    });
-    app.use(viteDevServer.middlewares);
+    })
+    app.use(viteDevServer.middlewares)
   } else {
-    app.use(express.static(`${root}/dist/client`));
+    console.log("❗️❗️ PRODUCTION MODE ❗️❗️")
+    app.use(express.static(`${root}/dist/client`))
   }
 
-  const renderPage = createPageRenderer({ viteDevServer, isProduction, root });
+  console.log('✅ Server running')
 
   app.get('*', async (req, res, next) => {
-    const url = req.originalUrl;
-    const pageContext = await renderPage({ url });
-    const { httpResponse } = pageContext;
+    const pageContextInit = {
+        urlOriginal: req.originalUrl
+    }
 
-    if (!httpResponse) return next();
-    res.status(httpResponse.statusCode).set(httpResponse.headers).send(httpResponse.body);
-  });
+    const pageContext = await renderPage(pageContextInit)
+    const { httpResponse } = pageContext
 
-  const port = process.env.PORT || 3000;
+    if (!httpResponse) return next()
+    res.status(httpResponse.statusCode).set(httpResponse.headers).send(httpResponse.body)
+  })
+
+  const port = process.env.PORT || 5175
   app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
+    console.log(`Server running at http://localhost:${port}`)
+  })
 }
 
-startServer();
+startServer()

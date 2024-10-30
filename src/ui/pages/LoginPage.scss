@@ -71,3 +71,10 @@
     }
   }
 }
+
+
+@media (max-width: 768px) {
+  .login-page .form-container {
+    width: calc(90% - 80px) !important;
+  }
+}

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import Logo from '../components/logo/Logo'
 import { Button, Form, FormProps, Input, notification } from 'antd'
 import { useAuth } from '../../data/hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
 
 import './LoginPage.scss'
 
@@ -12,13 +11,12 @@ type FieldType = {
 }
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate()
   const [ form ] = Form.useForm()
   const { auth, error, getAuthToken } = useAuth()
 
   useEffect(() => {
     if (auth.token) {
-      navigate('/')
+      window.location.href = '/'
     }
   }, [auth])
 
@@ -40,7 +38,7 @@ const LoginPage: React.FC = () => {
       <div className="head">
         <Logo />
         <ul className="links">
-          <li><a href="#">Registrar</a></li>
+          <li><a href="#" aria-label="Registrar">Registrar</a></li>
         </ul>
       </div>
       <div className="form-container">
@@ -74,8 +72,8 @@ const LoginPage: React.FC = () => {
               )
             }
             <Form.Item >
-              <Button type="primary" htmlType="submit" block>
-                Iniciar sessión
+              <Button type="primary" htmlType="submit" aria-label="Iniciar sesión" block>
+                Iniciar sesión
               </Button>
             </Form.Item>
           </Form>

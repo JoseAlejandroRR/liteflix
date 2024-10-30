@@ -29,7 +29,7 @@ const MenuNavigationDrawer: React.FC<MenuNavigationDrawerProps> = ({
       className="navigation-menu-drawer"
       extra={
         <Space>
-          <Button className="action-btn" icon={<BellDotIcon />} onClick={() => {}} />
+          <Button className="action-btn" icon={<BellDotIcon />} onClick={() => {}} aria-label="Ver notificaciones" />
           <UserAvatar />
         </Space>
       }>
