@@ -123,4 +123,52 @@
       }      
     }
   }
+
+  &.movie-card-mobile {
+
+    .overlay {
+      display: block;
+    }
+
+    .movie-info {
+      transition: none;
+    }
+
+    &:hover {
+
+      .overlay {
+        display: block;
+        opacity: 1;
+        transition: none;
+        z-index: 2;
+        position: absolute;
+      }
+
+      .movie-info {
+        opacity: 0;
+        z-index: 5;
+        position: absolute;
+      }
+    }
+  }
+
+  &.movie-card-active {
+
+    .overlay {
+      opacity: 0;
+    }
+
+    .movie-info {
+      opacity: 1;
+      position: absolute;
+      z-index: 3;
+    }
+
+    &:hover {
+      .movie-info {
+        z-index: 3;
+        opacity: 1;
+      }
+    }
+  }
 }
