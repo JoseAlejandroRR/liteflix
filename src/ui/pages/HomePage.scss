@@ -24,6 +24,23 @@
 .main-movie .featured-image {
   object-fit: cover;
   opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  animation: transitionImage 3s ease-out forwards;
+  transform: scale(2) translateY(0);
+
+  @keyframes transitionImage {
+    0% {
+      opacity: 0;
+      top: 0;
+      transform: scale(1.1) translateY(0);
+    }
+    100% {
+      opacity: 0.5;
+      transform: scale(1.1) translateY(-2%);
+    }
+  }
   /*transform: scale(1.2) translate(5% , 0);
   animation: movingImage 10s ease-in-out infinite;
 
@@ -90,9 +107,9 @@
   right: 0;
   top: 100px;
   max-width: 260px;
-  z-index: 10;
+  z-index: 5;
   opacity: 0;
-  animation: sideAnimation 2s ease-in-out forwards 0.5s;
+  animation: sideAnimation 2s ease-in-out forwards;
 
   @keyframes sideAnimation {
     to{
@@ -145,7 +162,7 @@
           padding: 20px;
 
           .animated-button {
-            width: calc(100% - 40px);
+            width: calc(100% - 200px);
           }
         }
       }
@@ -159,16 +176,27 @@
       max-width: 100%;
       transform: translateY(0%);
 
+      ul {
+        text-align: center;
+      }
+
       li {
         display: flex;
         justify-content: center;
 
+        .text-animation {
+          display: inline-block;
+          width: 100%;
+        }
+
         .movie-card {
-          max-width: 400px;
-          max-height: 260px;
+          min-height: 200px;
 
           .image-container {
-            max-height: 240px !important;
+
+            .movie-image {
+              position: relative;
+            }
           }
         }
       }
@@ -186,6 +214,7 @@
 
   .buttons {
     display: flex;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 10px;
@@ -253,5 +282,15 @@
 
   .sidebar-popular-movies {
     right: 100px;
+
+    .movie-card {
+      max-width: 400px;
+      max-height: 260px;
+
+      .image-container {
+        width: 220px;
+        height: 150px;
+      }
+    }
   }
 }

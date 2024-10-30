@@ -8,6 +8,7 @@ import { useAuth } from '../../data/hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 
 import './HomePage.scss'
+import ConnectHomeProvider from '../../data/hooks/home/connectHome'
 
 const HomePage: React.FC =  () => {
   const { movies: moviesFeatured, getMovies: getFeaturedMovies } = useMoviesFeatured()
@@ -28,13 +29,15 @@ const HomePage: React.FC =  () => {
 
   return (
     <>
-      <div className="home-page">
-        <Navbar />
-        <div className="content">
-          <MainMovieSection movies={moviesFeatured.slice(0, moviesSize)} />
-          <PopularMoviesList length={moviesSize} />
+      <ConnectHomeProvider>
+        <div className="home-page">
+          <Navbar />
+          <div className="content">
+            <MainMovieSection movies={moviesFeatured.slice(0, moviesSize)} />
+            <PopularMoviesList length={moviesSize} />
+          </div>
         </div>
-      </div>
+      </ConnectHomeProvider>
     </>
   )
 }

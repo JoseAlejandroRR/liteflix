@@ -23,6 +23,12 @@
     font-size: 18px;
     font-weight: 400;
   }
+
+  ul {
+    li{
+      padding: 10px !important;
+    }
+  }
 }
 
 
@@ -82,8 +88,8 @@
     bottom: 0 !important;
 
     ul.ant-dropdown-menu {
-      
       width: calc(100% - 20px);
+
     }
   }
 }

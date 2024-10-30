@@ -8,6 +8,7 @@
   width: calc(100% - 200px);
   z-index: 10;
   gap: 30px;
+  z-index: 10;
 
   .logo {
     color: #64EEBC;
@@ -77,6 +78,7 @@
   }
 
   @media (max-width: 768px) {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 30%, transparent);
     padding: 20px;
     width: calc(100% - 50px);
 

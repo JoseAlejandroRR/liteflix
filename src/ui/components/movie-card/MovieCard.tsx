@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import ButtonPlay from '../btn-play/ButtonPlay'
 import { MovieDto } from '../../../data/dto/MovieDto'
 import { AnimationBox } from '../animations/AnimationBox'
@@ -7,13 +7,16 @@ import './MovieCard.scss'
 
 interface MovieCardProps {
   movie: MovieDto,
-  index: number
+  index: number,
+  show?: boolean,
+  delay?: number
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, show, delay }) => {
   const [isLoaded, setIsLoaded] = useState(false)
+
   return (
-    <AnimationBox delay={index * 0.25 +0.25} effect="down-up" style={{ display: isLoaded ? 'block' : 'none' }}>
+    <AnimationBox delay={ delay ?? 1} effect="down-up" style={{ display: show && isLoaded ? 'block' : 'none' }}>
       <div className="movie-card">
         <div className="image-container">
           <img src={movie.thumbnailURL} alt={movie.title} className="movie-image"

@@ -28,9 +28,10 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
     getMyMovieList: getMyMovies, error: errorMyMovies,
   } = useMyMovies()
   const [ category, setCategory ] = useState<DropdownMenuItem>(items[0])
+  const [ isReady, setIsReady ] = useState<boolean>(false)
+  const [ isRenderList, setIsRenderList ] = useState<boolean>(false)
 
   const movies = category.key === items[0].key ? moviesPopular : myMovies
-
   const isLoading = loadingMyMovies || loadingPopular
   const checkError = errorPopular || errorMyMovies
 
@@ -47,22 +48,21 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
   }, [category])
 
   useEffect(() => {
-    console.log(checkError)
+    if (isReady === true) return
+    setIsReady(true)
+  }, [isReady])
+
+  useEffect(() => {
     if (!checkError) return
     notification.info({ message: 'Categoria no disponible', placement: 'bottomRight' })
   }, [checkError])
 
-  /*const popularMovies = [
-    { title: 'HOUSE OF CARDS', image: 'https://occ-0-8407-2219.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABfDBXd9joUxbI6ThPWavzQ753B-EtfISnu7-pGrxSnRBTF37Pw_KXXTHkIglVudu_aycJzyfD8ftoyeuQDVo5tIvMUdLvsvIzAslTHptQ1SwCXX2QcVijxE2dA.jpg?r=43d' },
-    { title: 'THE ETERNAL SUNSHINE OF A MIND', image: 'https://media.self.com/photos/5969182f9bf47f696c418d39/master/pass/game-of-thrones-final.jpg' },
-    { title: 'STRANGER THINGS', image: 'https://image.tmdb.org/t/p/w500/4KHEK6AQFHhv4TDtL3KLReePB05.jpg' },
-    { title: 'MARSEILLE', image: 'https://image.tmdb.org/t/p/w500/3m0j3hCS8kMAaP9El6Vy5Lqnyft.jpg' },
-  ]*/
-
   const handleCategorySelected = (item: DropdownMenuItem) => {
-    console.log("SELECTED: ", item)
     setCategory(item)
+    setIsRenderList(true)
   }
+
+  if (!isReady) return <>Cargando</>
 
   return (
     <aside className="sidebar-popular-movies">
@@ -77,7 +77,8 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
       <ul>
         {movies && movies.slice(0, length).map((movie, index) => (
           <li key={movie.id}>
-              <MovieCard key={movie.id} movie={movie} index={index} />
+              <MovieCard key={movie.id} movie={movie}
+                index={index} show={isReady} delay={ isRenderList ? (index * 0.25) + 0.5 : (index * .25) + 2 } />
           </li>
         ))}
       </ul>

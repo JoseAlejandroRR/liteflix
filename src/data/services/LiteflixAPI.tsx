@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosRequestConfig } from 'axios'
 import { MovieDto } from '../dto/MovieDto'
 import BackendService from './BackendService'
 import { UpdateMovieDto } from '../dto/UpdateMovieDto'

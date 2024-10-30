@@ -27,7 +27,7 @@ const MainMovieSection: React.FC<MainMovieSectionProps> = ({ movies }) => {
 
   return (
     <>
-    <FeaturedMovieCard movie={movies[currentMovie]} />
+    <FeaturedMovieCard key={movies[currentMovie].id} movie={movies[currentMovie]} />
     </>
   )
 }

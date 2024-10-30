@@ -1,6 +1,6 @@
 .main-movie {
-  opacity: 0;
-  animation: fadeInOut 10s ease-in-out infinite;
+  opacity: 1;
+  /*animation: fadeInOut 10s ease-in-out infinite;*/
    
   @keyframes fadeInOut {
     0% {
@@ -61,7 +61,7 @@
     position: relative;
     width: 100%;
     top: -20px;
-    animation: text-animation-transformer 1s ease forwards 2s;
+    animation: text-animation-transformer 2s ease forwards 2s;
   }
 }
 

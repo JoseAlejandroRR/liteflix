@@ -18,8 +18,8 @@ class MoviesPopularAPI extends BackendService {
         title: item.title,
         voteCount: item.vote_count,
         voteAverage: item.vote_average,
-        imageURL: `https://image.tmdb.org/t/p/original${item.poster_path}`,
-        thumbnailURL: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+        imageURL: `https://image.tmdb.org/t/p/original${item.backdrop_path}`,
+        thumbnailURL: `https://image.tmdb.org/t/p/w200${item.backdrop_path}`,
         releasedAt: new Date(item.release_date),
         language: 'en'
       })
