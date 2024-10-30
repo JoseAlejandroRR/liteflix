@@ -4,6 +4,7 @@ import DropdownMenu, { DropdownMenuItem } from '../dropdown-menu/DropdownMenu'
 import { useMoviesPopular } from '../../../data/hooks/useMoviesPopular'
 import { useMyMovies } from '../../../data/hooks/useMyMovies'
 import { notification, Spin } from 'antd'
+import { useIsFirstRender } from '../../utils'
 
 type PopularMoviesList = {
   length: number
@@ -24,7 +25,7 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
     getMovies: getPopularMovies, error: errorPopular
   } = useMoviesPopular()
   const {
-    movies: myMovies, loading: loadingMyMovies,
+    movies: myMovies, isLoading: loadingMyMovies,
     getMyMovieList: getMyMovies, error: errorMyMovies,
   } = useMyMovies()
   const [ category, setCategory ] = useState<DropdownMenuItem>(items[0])
@@ -34,8 +35,21 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
   const movies = category.key === items[0].key ? moviesPopular : myMovies
   const isLoading = loadingMyMovies || loadingPopular
   const checkError = errorPopular || errorMyMovies
+  const istFirstRender = useIsFirstRender()
 
   useEffect(() => {
+    console.log("istFirstRender:", istFirstRender)
+    if (istFirstRender) {
+      getPopularMovies().then(() => {
+        return getMyMovies()
+      }).then(() => {
+        console.log('DATA preloaded')
+      }).catch((err) => {
+        console.log('[LoadingCacheData] Error: ', err)
+      })
+      return
+    }
+
     if (category.key === items[0].key) {
       getPopularMovies()
       return

@@ -5,6 +5,7 @@ import App from './App.tsx'
 import AuthProvider from './data/hooks/useAuth.tsx'
 
 import './index.css'
+import { MyMoviesProvider } from './data/hooks/useMyMovies.tsx'
 
 const config: ThemeConfig = {
   token: {
@@ -20,7 +21,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider theme={config}>
       <AuthProvider>
-        <App />
+        <MyMoviesProvider>
+          <App />
+        </MyMoviesProvider>
       </AuthProvider>
     </ConfigProvider>
   </StrictMode>,

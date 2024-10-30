@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { MovieDto } from '../dto/MovieDto'
 import LiteflixAPI from '../services/LiteflixAPI'
 import { CreateMovieDto } from '../dto/CreateMovieDto'
@@ -6,9 +6,29 @@ import axios from 'axios'
 
 const liteflixApi = new LiteflixAPI()
 
-export const useMyMovies = () => {
+
+type MyMoviesContextProps = {
+  movies: MovieDto[]
+  isLoading: boolean
+  error: string | null
+  getMovies: () => Promise<MovieDto[] | null>
+  getMyMovieList: () => Promise<MovieDto[] | null>
+  addMovie: (input: CreateMovieDto, file: File, config: any) => Promise<MovieDto | null>
+}
+const MyMoviesContext = createContext<MyMoviesContextProps>({
+  movies: [],
+  isLoading: false,
+  error: null,
+  getMovies: () => new Promise((resolve) => resolve(null)),
+  getMyMovieList: () => new Promise((resolve) => resolve(null)),
+  addMovie: () => new Promise((resolve) => resolve(null)),
+})
+
+export const useMyMovies = () => useContext(MyMoviesContext)
+
+export const MyMoviesProvider = ({ children } : { children: React.ReactNode }) => {
   const [movies, setMovies] = useState<MovieDto[]>([])
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const getMovies = async (): Promise<MovieDto[]> => {
@@ -78,12 +98,16 @@ export const useMyMovies = () => {
     return null
   }
 
-  return {
-    movies,
-    loading,
-    error,
-    getMovies,
-    getMyMovieList,
-    addMovie,
-  }
+  return (
+    <MyMoviesContext.Provider value={{
+      movies,
+      isLoading,
+      error,
+      getMovies,
+      getMyMovieList,
+      addMovie
+    }}>
+      { children }
+    </MyMoviesContext.Provider>
+  )
 }

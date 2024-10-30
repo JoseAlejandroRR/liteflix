@@ -19,7 +19,7 @@ class MoviesHighlightAPI extends BackendService {
         voteCount: item.vote_average,
         voteAverage: item.vote_count,
         imageURL: `https://image.tmdb.org/t/p/original${item.backdrop_path}`,
-        thumbnailURL: `https://image.tmdb.org/t/p/w250${item.backdrop_path}`,
+        thumbnailURL: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
         releasedAt: new Date(item.release_date),
         language: 'en'
       })
