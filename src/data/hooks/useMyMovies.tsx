@@ -12,7 +12,7 @@ type MyMoviesContextProps = {
   isLoading: boolean
   error: string | null
   getMovies: () => Promise<MovieDto[] | null>
-  getMyMovieList: () => Promise<MovieDto[] | null>
+  getMyMovieList: (cache?: boolean) => Promise<MovieDto[] | null>
   addMovie: (input: CreateMovieDto, file: File, config: any) => Promise<MovieDto | null>
 }
 const MyMoviesContext = createContext<MyMoviesContextProps>({
@@ -48,12 +48,12 @@ export const MyMoviesProvider = ({ children } : { children: React.ReactNode }) =
     return movies
   }
 
-  const getMyMovieList = async (): Promise<MovieDto[]> => {
+  const getMyMovieList = async (cache: boolean = true): Promise<MovieDto[]> => {
     let movies: MovieDto[] = []
     setError(null)
     setLoading(true)
     try {
-      movies = await liteflixApi.getMyMovieList()
+      movies = await liteflixApi.getMyMovieList(cache)
       setMovies(movies)
     } catch (err) {
       setError((err as Error).message)

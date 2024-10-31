@@ -5,6 +5,7 @@ import { useMoviesPopular } from '../../../data/hooks/useMoviesPopular'
 import { useMyMovies } from '../../../data/hooks/useMyMovies'
 import { notification, Spin } from 'antd'
 import { useIsFirstRender } from '../../utils'
+import { useAuth } from '../../../data/hooks/useAuth'
 
 type PopularMoviesList = {
   length: number
@@ -31,6 +32,7 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
   const [ category, setCategory ] = useState<DropdownMenuItem>(items[0])
   const [ isReady, setIsReady ] = useState<boolean>(false)
   const [ isRenderList, setIsRenderList ] = useState<boolean>(false)
+  const { auth } = useAuth()
 
   const movies = category.key === items[0].key ? moviesPopular : myMovies
   const isLoading = loadingMyMovies || loadingPopular
@@ -38,10 +40,9 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
   const istFirstRender = useIsFirstRender()
 
   useEffect(() => {
-    console.log("istFirstRender:", istFirstRender)
-    if (istFirstRender) {
+    if (istFirstRender && auth.token) {
       getPopularMovies().then(() => {
-        return getMyMovies()
+        return getMyMovies(false)
       }).then(() => {
         console.log('DATA preloaded')
       }).catch((err) => {

@@ -11,6 +11,7 @@ import { useAuth } from '../../../../data/hooks/useAuth'
 import MovieStatus from '../../../../data/dto/MovieStatus'
 
 import './MovieUploadModal.scss'
+import { useMyMovies } from '../../../../data/hooks/useMyMovies';
 
 const { Dragger } = Upload
 
@@ -20,6 +21,14 @@ type StepFinishedProps = {
 }
 
 const StepFinished:React.FC<StepFinishedProps> = ({ movie, onClose }) => {
+  const { getMyMovieList } = useMyMovies()
+
+  const handleClose = async () => {
+    getMyMovieList(false).then().catch()
+
+    onClose()
+  }
+
   return (
     <div className="step-finished">
       <Logo />
@@ -29,7 +38,7 @@ const StepFinished:React.FC<StepFinishedProps> = ({ movie, onClose }) => {
         <Button
           className={`upload-button upload-button-valid`}
           type="primary"
-          onClick={onClose}
+          onClick={handleClose}
           aria-label="Ir a Home"
           >
           Ir a Home
@@ -103,7 +112,6 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
         console.log(event)
         let percent = Math.floor((event.loaded / (event.total ?? event.loaded )) * 100);
         percent = percent > 99 ? 0 : percent 
-        console.log("PERCENT: ", percent)
         if (percent > 0) setProgress(percent)
       }
     }

@@ -30,10 +30,14 @@ class LiteflixAPI extends BackendService {
     return movies
   }
 
-  async getMyMovieList(): Promise<MovieDto[]> {
+  async getMyMovieList(cache: boolean = true): Promise<MovieDto[]> {
     const movies: MovieDto[] = []
 
-    const data = await this.get<Record<string, any>>('/movies/my-movies')
+    const data = await this.get<Record<string, any>>('/movies/my-movies', {
+      ...(cache ? {} : { params:  {
+        'timestamp': Date.now(),
+      } })
+    })
 
     data.results.forEach((item: Record<string, any>) => {
       const movie = MovieDto.create({

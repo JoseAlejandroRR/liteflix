@@ -14,7 +14,7 @@ type FieldType = {
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const [ form ] = Form.useForm()
-  const { auth, error, getAuthToken } = useAuth()
+  const { auth, isLoading, error, getAuthToken } = useAuth()
 
   useEffect(() => {
     if (auth.token) {
@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
-            <h1>Iniciar sessión</h1>
+            <h1>Iniciar sesión</h1>
             <Form.Item<FieldType>
               name="email"
               rules={[
@@ -74,7 +74,7 @@ const LoginPage: React.FC = () => {
               )
             }
             <Form.Item >
-              <Button type="primary" htmlType="submit" aria-label="Iniciar sesión" block>
+              <Button type="primary" htmlType="submit" aria-label="Iniciar sesión" loading={isLoading} block>
                 Iniciar sesión
               </Button>
             </Form.Item>
