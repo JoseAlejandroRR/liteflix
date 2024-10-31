@@ -8,13 +8,14 @@ import { useHomePage } from '../../pages/HomePage'
 
 type FeaturedMovieCardProps = {
   movie: MovieDto
+  qualityHigher: boolean
 }
 
-const FeaturedMovieCard: React.FC<FeaturedMovieCardProps> = ({ movie }) => {
+const FeaturedMovieCard: React.FC<FeaturedMovieCardProps> = ({ movie, qualityHigher }) => {
   const { isLoading, notifyStatus } = useHomePage()
 
   useEffect(() => {
-    notifyStatus(true)
+    //notifyStatus(true)
   }, [movie])
 
   const handlerLoad = () => {
@@ -24,7 +25,7 @@ const FeaturedMovieCard: React.FC<FeaturedMovieCardProps> = ({ movie }) => {
   return (
     <section className="main-movie">
       <ProgressiveImage className="featured-image" lowResImage={movie.thumbnailURL!} highResImage={movie.imageURL}
-        onLoadHighRes={handlerLoad} alt={movie.title} />
+        onLoadHighRes={handlerLoad} alt={movie.title} qualityHigher={qualityHigher} />
       {/*
         isLoading && (
           <>

@@ -5,6 +5,7 @@ import { MovieDto } from '../../../data/dto/MovieDto'
 
 import './MainMovieSection.scss'
 import { useHomePage } from '../../pages/HomePage'
+import { useAuth } from '../../../data/hooks/useAuth'
 
 type MainMovieSectionProps = {
   movies: MovieDto[]
@@ -13,6 +14,7 @@ type MainMovieSectionProps = {
 const MainMovieSection: React.FC<MainMovieSectionProps> = ({ movies }) => {
   const [currentMovie, setCurrentMovie] = useState<number>(0)
   const { isReady } = useHomePage()
+  const { settings } = useAuth()
 
   useEffect(() => {
     if (!isReady) {
@@ -32,7 +34,8 @@ const MainMovieSection: React.FC<MainMovieSectionProps> = ({ movies }) => {
 
   return (
     <>
-    <FeaturedMovieCard key={movies[currentMovie].id} movie={movies[currentMovie]} />
+    <FeaturedMovieCard key={movies[currentMovie].id} movie={movies[currentMovie]}
+      qualityHigher={settings.full4k} />
     </>
   )
 }

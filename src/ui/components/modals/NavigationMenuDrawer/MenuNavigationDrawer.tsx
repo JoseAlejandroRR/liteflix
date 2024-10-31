@@ -5,6 +5,7 @@ import UserAvatar from '../user-avatar/UserAvatar'
 import BellDotIcon from './../../../../assets/bell-dot-icon.svg?react'
 
 import './MenuNavigationDrawer.scss'
+import { CiSettings } from "react-icons/ci"
 
 type MenuNavigationDrawerProps = {
   open: boolean
@@ -20,6 +21,14 @@ const MenuNavigationDrawer: React.FC<MenuNavigationDrawerProps> = ({
     if (onClose) onClose()
   }
 
+  const handleSettings = () => {
+    onActionClicked(MenuAction.SETTINGS)
+  }
+
+  const handleNotifications = () => {
+    onActionClicked(MenuAction.NOTIFICATIONS)
+  }
+
   return (
     <Drawer open={open} styles={{
         body: {
@@ -30,8 +39,9 @@ const MenuNavigationDrawer: React.FC<MenuNavigationDrawerProps> = ({
       className="navigation-menu-drawer"
       extra={
         <Space>
-          <Button className="action-btn" icon={<BellDotIcon />} onClick={() => {}} aria-label="Notificaciones" />
-          <UserAvatar />
+          <Button className="action-btn" icon={<CiSettings />} onClick={handleSettings} aria-label="Configuración" />
+          <Button className="action-btn" icon={<BellDotIcon />} onClick={handleNotifications} aria-label="Notificaciones" />
+          <UserAvatar onSelectAction={onActionClicked} />
         </Space>
       }>
       <NavigationMenu onSelectAction={onActionClicked} />

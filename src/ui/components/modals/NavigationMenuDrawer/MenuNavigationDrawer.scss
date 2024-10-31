@@ -15,6 +15,15 @@
 
     &.action-btn {
       font-size: 26px !important;
+
+      &:hover {
+        background-color: transparent !important;
+
+        .ant-btn-icon {
+          color: #64EEBC !important;
+          animation: none;
+        }
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState  } from 'react'
 import useLocalStorage from './useLocalStorage'
-import AuthSession from '../security/AuthSession'
+import AuthSession, { UserSettings } from '../security/AuthSession'
 import { AxiosError } from 'axios'
 import UserstAPI from '../services/UsersAPI'
 
@@ -20,7 +20,9 @@ type AuthContextProps = {
   isLoading: boolean,
   getAuthToken: (email: string, password: string) => Promise<AuthSession>
   error: AuthError | null,
-  logout: () => void
+  logout: () => void,
+  settings: UserSettings
+  updateSettings: (settings: UserSettings) => void
 }
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -28,7 +30,12 @@ export const AuthContext = createContext<AuthContextProps>({
   isLoading: false,
   getAuthToken: () => new Promise((resolve) => resolve(new AuthSession)),
   error: null,
-  logout: () => {}
+  logout: () => { },
+  settings: {
+    full4k: false,
+    preloadContent: true
+  },
+  updateSettings: ()  => {}
 })
 
 export const useAuth = () => useContext(AuthContext)
@@ -39,6 +46,10 @@ type AuthProviderProps = {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [auth, setAuth] = useLocalStorage<AuthSession>('auth', initialState)
+  const [settings, setSettings] = useLocalStorage<UserSettings>('settings',{
+    full4k: false,
+    preloadContent: true
+  })
   
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState<AuthError | null>(null)
@@ -70,9 +81,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setAuth(initialState)
   }
 
+  const updateSettings = (config: UserSettings) => {
+    setSettings({ ...config })
+  }
+
   return (
     <AuthContext.Provider
-      value={{auth, getAuthToken, logout, isLoading, error}}
+      value={{auth, getAuthToken, logout, settings, updateSettings, isLoading, error}}
     >
       {children}
     </AuthContext.Provider>

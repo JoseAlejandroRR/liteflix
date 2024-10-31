@@ -32,7 +32,7 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
   const [ category, setCategory ] = useState<DropdownMenuItem>(items[0])
   const [ isReady, setIsReady ] = useState<boolean>(false)
   const [ isRenderList, setIsRenderList ] = useState<boolean>(false)
-  const { auth } = useAuth()
+  const { auth, settings } = useAuth()
 
   const movies = category.key === items[0].key ? moviesPopular : myMovies
   const isLoading = loadingMyMovies || loadingPopular
@@ -40,15 +40,16 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
   const istFirstRender = useIsFirstRender()
 
   useEffect(() => {
-    if (istFirstRender && auth.token) {
-      getPopularMovies().then(() => {
-        return getMyMovies(false)
-      }).then(() => {
-        console.log('DATA preloaded')
-      }).catch((err) => {
-        console.log('[LoadingCacheData] Error: ', err)
-      })
-      return
+    if (istFirstRender && auth.token, settings) {
+      if (settings.preloadContent) {
+        getPopularMovies().then(() => {
+          return getMyMovies(false)
+        }).then(() => {
+          console.info('[PreloadedData] Success')
+        }).catch((err) => {
+          console.log('[LoadingCacheData] Error: ', err)
+        })
+      }
     }
 
     if (category.key === items[0].key) {

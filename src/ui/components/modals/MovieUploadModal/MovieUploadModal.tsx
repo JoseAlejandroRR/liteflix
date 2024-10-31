@@ -9,9 +9,9 @@ import { AxiosError, AxiosRequestConfig } from 'axios'
 import Logo from '../../logo/Logo'
 import { useAuth } from '../../../../data/hooks/useAuth'
 import MovieStatus from '../../../../data/dto/MovieStatus'
+import { useMyMovies } from '../../../../data/hooks/useMyMovies'
 
 import './MovieUploadModal.scss'
-import { useMyMovies } from '../../../../data/hooks/useMyMovies';
 
 const { Dragger } = Upload
 
@@ -59,7 +59,6 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
   const liteflixApi = new LiteflixAPI()
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const [ progress, setProgress ] = useState<number>(40)
-  //const [request, setRequest] = useState<UploadRequestOption | null>(null)
   const [ movie, setMovie ] = useState<MovieDto | null>()
   const [ axiosCtr, setAxiosCtr ] = useState<AbortController | null>(null)
   const [ errorReq, setErrorReq ] = useState<AxiosError | null>(null)
@@ -164,7 +163,6 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
   const handleAbort = (e:React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log('CLICK', axiosCtr?.signal.aborted)
     if (movie) return
     axiosCtr?.abort()
   }
@@ -172,7 +170,6 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
   const handleRetry = (e:React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log('Retry', errorReq)
     setAxiosCtr(null)
     setErrorReq(null)
     handleSubmit()
@@ -193,7 +190,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
     >
     {
       finished ? (
-        <StepFinished movie={new MovieDto()} onClose={handleClose} />
+        <StepFinished movie={movie!} onClose={handleClose} />
       ) : (
         <>
       <h2 className="modal-title">Agregar Película</h2>

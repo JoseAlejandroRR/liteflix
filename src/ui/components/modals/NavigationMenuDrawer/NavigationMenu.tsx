@@ -6,9 +6,11 @@ import './NavigationMenu.scss'
 export enum MenuAction {
   ADD_MOVIE,
   LOGOUT,
+  SETTINGS,
+  NOTIFICATIONS,
 }
 
-type NavigationMenu = {
+export type NavigationMenu = {
   onSelectAction: (trigger: MenuAction) => void
 }
 
@@ -51,7 +53,7 @@ const NavigationMenu: React.FC<NavigationMenu> = ({
           </a>
         </li>
         <li>
-          <a href="#" aria-label="Cerrar sesión" onClick={(e) => handlerClick(e, MenuAction.ADD_MOVIE)}>
+          <a href="#" aria-label="Cerrar sesión" onClick={(e) => handlerClick(e, MenuAction.LOGOUT)}>
             Cerrar sessión
           </a>
         </li>

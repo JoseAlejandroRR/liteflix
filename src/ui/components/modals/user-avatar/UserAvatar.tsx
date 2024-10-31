@@ -1,20 +1,25 @@
 import React from 'react'
 import { Avatar, Button, Dropdown, MenuProps } from 'antd'
 import { BiUser } from 'react-icons/bi'
-import { useAuth } from '../../../../data/hooks/useAuth'
+import { MenuAction } from '../NavigationMenuDrawer/NavigationMenu'
 
-const UserAvatar: React.FC = () => {
-  const { logout } = useAuth()
+type UserAvatarProps = {
+  onSelectAction: (trigger: MenuAction) => void
+}
+
+const UserAvatar: React.FC<UserAvatarProps> = ({
+  onSelectAction
+}) => {
 
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
         <a target="#" aria-label="Mi cuenta">
-          Mi Cuenta
+          Configuración
         </a>
       ),
-      disabled: true,
+      onClick: () => onSelectAction(MenuAction.SETTINGS)
     },
     {
       key: '2',
@@ -23,7 +28,7 @@ const UserAvatar: React.FC = () => {
           Logout
         </a>
       ),
-      onClick: logout
+      onClick: () => onSelectAction(MenuAction.LOGOUT)
     },
   ]
 

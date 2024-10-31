@@ -7,11 +7,12 @@ interface ProgressiveImageProps extends React.InputHTMLAttributes<HTMLImageEleme
   lowResImage: string,
   highResImage: string,
   onLoadLowRes?: () => void
-  onLoadHighRes?: () => void
+  onLoadHighRes?: () => void,
+  qualityHigher?: boolean
 }
 
 const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
-  lowResImage, highResImage, onLoadLowRes, onLoadHighRes, ...props
+  lowResImage, highResImage, onLoadLowRes, onLoadHighRes, qualityHigher , ...props
 }) => {
   const istFirstRender = useIsFirstRender()
   const [highSrc, setHighSrc] = useState<string | undefined>(undefined)
@@ -19,9 +20,12 @@ const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
 
   useEffect(() => {
     (async () => {
-      const fileKey = getFileNameFromPath(highResImage).split('.')[0]
-      const cacheURL = await getImageFromCache(`cache/high/${fileKey}.webp`, highResImage)
-      setHighSrc(cacheURL)
+      let fileURL = highResImage
+      if (qualityHigher !== true) {
+        const fileKey = getFileNameFromPath(highResImage).split('.')[0]
+        fileURL = await getImageFromCache(`cache/high/${fileKey}.webp`, highResImage)
+      }
+      setHighSrc(fileURL)
     })()
   }, [highResImage])
 
