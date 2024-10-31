@@ -10,7 +10,7 @@ const UserAvatar: React.FC = () => {
     {
       key: '1',
       label: (
-        <a target="#">
+        <a target="#" aria-label="Mi cuenta">
           Mi Cuenta
         </a>
       ),
@@ -19,7 +19,7 @@ const UserAvatar: React.FC = () => {
     {
       key: '2',
       label: (
-        <a target="#">
+        <a target="#" aria-label="logout">
           Logout
         </a>
       ),
@@ -29,7 +29,7 @@ const UserAvatar: React.FC = () => {
 
   return (
     <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayClassName="dropdown-menu-active">
-      <Button type="text" style={{ padding: 0 }}>
+      <Button type="text" style={{ padding: 0 }} aria-label="Mi perfil">
         <Avatar
           size="large"
           icon={<BiUser />}

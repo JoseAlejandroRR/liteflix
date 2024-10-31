@@ -6,7 +6,6 @@ import PopularMoviesList from '../components/popular-movies-list/PopularMoviesLi
 import { useMoviesFeatured } from '../../data/hooks/useMoviesFeatured'
 import { useAuth } from '../../data/hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
-import LoaderImagesEager from '../components/common/ProgressiveImage/usePreloadImages'
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
 

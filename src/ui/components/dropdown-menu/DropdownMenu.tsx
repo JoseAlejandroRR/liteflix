@@ -37,7 +37,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
 
   return (
     <div className="dropdown-menu">
-      <Dropdown menu={{items}} trigger={['click']} placement="bottomLeft" overlayClassName="dropdown-menu-active">
+      <Dropdown menu={{items}} trigger={['click']} placement="bottomLeft" overlayClassName="dropdown-menu-active dropdown-menu-categories-active">
         <Typography.Text className="item-selected"
           style={{ color: 'white', cursor: 'pointer', textTransform: 'uppercase' }}
           >

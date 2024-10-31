@@ -40,7 +40,7 @@ const LoginPage: React.FC = () => {
       <div className="head">
         <Logo />
         <ul className="links">
-          <li><a href="#">Registrar</a></li>
+          <li><a href="#" aria-label="Registrar">Registrar</a></li>
         </ul>
       </div>
       <div className="form-container">
@@ -74,8 +74,8 @@ const LoginPage: React.FC = () => {
               )
             }
             <Form.Item >
-              <Button type="primary" htmlType="submit" block>
-                Iniciar sessión
+              <Button type="primary" htmlType="submit" aria-label="Iniciar sesión" block>
+                Iniciar sesión
               </Button>
             </Form.Item>
           </Form>

@@ -165,6 +165,11 @@
     }
 
     &:hover {
+
+      .overlay {
+        opacity: 0;
+      }
+
       .movie-info {
         z-index: 3;
         opacity: 1;

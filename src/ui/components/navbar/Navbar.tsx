@@ -10,12 +10,13 @@ import { useAuth } from '../../../data/hooks/useAuth'
 import Logo from '../logo/Logo'
 
 import './Navbar.scss'
+import { MenuAction } from '../modals/NavigationMenuDrawer/NavigationMenu'
 
 const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false)
   const [showForm, setShowForm] = useState<boolean>(false)
   const [notificationList] = useState([{}])
-  const { auth } = useAuth()
+  const { auth, logout } = useAuth()
 
 
   const toggleMenu = () => {
@@ -31,6 +32,18 @@ const Navbar: React.FC = () => {
     setShowForm(false)
   }
 
+  const onEventMenuClicked = (action: MenuAction) => {
+    if (action === MenuAction.ADD_MOVIE) {
+      setShowForm(true)
+    }
+
+    if (action === MenuAction.LOGOUT) {
+      logout()
+    }
+
+    setShowMenu(false)
+  }
+
   return (
     <>
     <nav className="navbar">
@@ -39,13 +52,13 @@ const Navbar: React.FC = () => {
       </div>
       <div className="actions">
         <ul className="left-actions">
-          <li className="action-add"><a href="#" onClick={handleShowForm}><AiOutlinePlus/> Agregar Película</a></li>
-          <li className="action-menu"><a href="#" onClick={toggleMenu}><MenuIcon/></a></li>
+          <li className="action-add"><a href="#" onClick={handleShowForm} aria-label="Agregar película"><AiOutlinePlus/> Agregar Película</a></li>
+          <li className="action-menu"><a href="#" onClick={toggleMenu} aria-label="Menú"><MenuIcon/></a></li>
         </ul>
         <ul className="right-actions">
-          <li className="action-menu"><a href="#" onClick={toggleMenu}><MenuIcon/></a></li>
+          <li className="action-menu"><a href="#" onClick={toggleMenu} aria-label="Menú"><MenuIcon/></a></li>
           <li className="action-notifications">
-            <a href="#"> { notificationList.length > 0 ? (<BellDotIcon />) : (<BellIcon />) } </a>
+            <a href="#" aria-label="Notificaciones"> { notificationList.length > 0 ? (<BellDotIcon />) : (<BellIcon />) } </a>
           </li>
           <li className="action-avatar" title={auth.user?.firstname}>
           <UserAvatar />
@@ -53,7 +66,7 @@ const Navbar: React.FC = () => {
         </ul>
       </div>
     </nav>
-    <MenuNavigationDrawer open={showMenu} onClose={toggleMenu} />
+    <MenuNavigationDrawer open={showMenu} onClose={toggleMenu} onActionClicked={onEventMenuClicked} />
     <MovieUploadModal open={showForm} onClose={handleClose} />
     </>
   )

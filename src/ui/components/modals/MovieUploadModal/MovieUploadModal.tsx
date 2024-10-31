@@ -30,6 +30,7 @@ const StepFinished:React.FC<StepFinishedProps> = ({ movie, onClose }) => {
           className={`upload-button upload-button-valid`}
           type="primary"
           onClick={onClose}
+          aria-label="Ir a Home"
           >
           Ir a Home
         </Button>
@@ -229,18 +230,18 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
                   {
                     axiosCtr?.signal.aborted === true ? (
                       <>
-                      <Button type="link" color="danger" style={{ color: '#FF0000' }}>Aborted</Button>
+                      <Button type="link" color="danger" style={{ color: '#FF0000' }} aria-label="Cancelado">Cancelado</Button>
                       </>
                     ) : (
                       <>
                        {
                         errorReq ? (
                           <>
-                          <Button type="link" onClick={handleRetry}>Reintentar</Button>
+                          <Button type="link" onClick={handleRetry} aria-label="Reintentar">Reintentar</Button>
                           </>
                         ) : (
                           <>
-                          <Button type="link" onClick={handleAbort}>{ movie ? '¡Listo!' : 'Cancelar' }</Button>
+                          <Button type="link" onClick={handleAbort} aria-label={ movie ? '¡Listo!' : 'Cancelar' }>{ movie ? '¡Listo!' : 'Cancelar' }</Button>
                           </>
                         )
                       }
@@ -276,6 +277,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
           disabled={isButtonDisabled || errorReq !== null}
           onClick={handleUpdateMovie}
           loading={isLoading}
+          aria-label="Subir Película"
           >
             Subir Película
         </Button>
