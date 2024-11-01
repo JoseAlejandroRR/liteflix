@@ -40,7 +40,7 @@ const PopularMoviesList: React.FC<PopularMoviesList> = ({ length }) => {
   const istFirstRender = useIsFirstRender()
 
   useEffect(() => {
-    if (istFirstRender && auth.token, settings) {
+    if (istFirstRender && auth.token && settings) {
       if (settings.preloadContent) {
         getPopularMovies().then(() => {
           return getMyMovies(false)

@@ -41,3 +41,5 @@ The client application is built with **ReactJS**, using **Vite** for fast develo
 
 npm run dev #start a local server in dev mode
 npm run build # compile for production
+
+```
