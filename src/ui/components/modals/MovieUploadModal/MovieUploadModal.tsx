@@ -53,6 +53,8 @@ interface MovieUploadModalProps {
   onClose: () => void
 }
 
+const maxSizeUpload = Number(import.meta.env.VITE_UPLOAD_SIZE_MAX || 2)
+
 const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) => {
   const [title, setTitle] = useState<string>('')
   const [file, setFile] = useState<File | null>(null)
@@ -140,6 +142,8 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
               message: `${error.path[0]}`, description: error.message, placement: 'bottomRight'
             }))
           }
+        } else if (err.response?.status === 413) {
+          notification.error({ message: `Imagen excede los ${maxSizeUpload}MB`, placement:'bottomRight' })
         }
       }
       setErrorReq(err as AxiosError)
