@@ -1,50 +1,43 @@
-# React + TypeScript + Vite
+# Streaming Platform Prototype - Web Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is the web client for the Streaming Platform developed with **ReactJS** and **TypeScript**. The goal is to provide an efficient and fluid user experience through a modern and responsive interface.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The client application is built with **ReactJS**, using **Vite** for fast development and efficient packaging. The application is fully responsive and adapts to different screen sizes, optimizing performance on desktop and mobile devices.
 
-## Expanding the ESLint configuration
+### Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **ReactJS**: Main library for interface development.
+- **TypeScript**: Provides static typing and development improvements.
+- **Vite**: Fast and efficient build tool.
+- **Ant Design**: UI component framework.
+- **Axios**: Library for making HTTP requests.
+- **React Hooks** and **React Context**: For state management and global communication.
 
-- Configure the top-level `parserOptions` property like this:
+> [!TIP]
+> To work with this repo, I recommend using **Node v.20.3.0 LTS** or higher.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Project Structure
+
+```plaintext
+/src
+  /assets 
+  /data    # Definición de contextos globales
+	  /dto
+	  /hooks
+	  /security
+	  services
+  /ui
+	  /components
+	  /pages
+/App.tsx
+/router.tsx
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## NPM Scripts 
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```sh
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+npm run dev #start a local server in dev mode
+npm run build # compile for production
