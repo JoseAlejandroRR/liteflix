@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, Upload, Input, Button, Progress } from 'antd'
+import { Modal, Upload, Input, Button, Progress, notification } from 'antd'
 import { PaperClipOutlined } from '@ant-design/icons'
 import { TfiClose } from "react-icons/tfi";
 import { UploadChangeParam, UploadProps } from 'antd/es/upload'
@@ -108,25 +108,40 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
       signal: apiRequest.signal,
       headers: { "content-type": "multipart/form-data" },
       onUploadProgress: (event) => {
-        console.log(event)
         let percent = Math.floor((event.loaded / (event.total ?? event.loaded )) * 100);
         percent = percent > 99 ? 0 : percent 
         if (percent > 0) setProgress(percent)
       }
     }
 
+    let movieDraft: MovieDto | null = null
     try {
-      const movie = await liteflixApi.createMovie(formData, config)
+      if (!movie) {
+        movieDraft = await liteflixApi.createMovie(formData, config)
+        if (!movieDraft) return
+        setMovie(movieDraft)
+      }
 
-      if (!movie) return
-      const fileName = movie.imageURL?.split(`${import.meta.env.VITE_AWS_BUCKET_PUBLIC_URL}/`)
+      const updateMovie = movieDraft ?? movie
+
+      const fileName = updateMovie!.imageURL?.split(`${import.meta.env.VITE_AWS_BUCKET_PUBLIC_URL}/`)
       const thumbnailURL = await liteflixApi.generateThumbnail(fileName![1])
-      movie.thumbnailURL = thumbnailURL!
+      updateMovie!.thumbnailURL = thumbnailURL!
 
-      setMovie({...movie })
+      setMovie({...updateMovie! })
 
     } catch (err) {
       console.log('[handleSubmit]: Error: ', err)
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 400) {
+          const issues = err.response?.data?.error?.issues
+          if (issues) {
+            issues.forEach((error: any) => notification.error({
+              message: `${error.path[0]}`, description: error.message, placement: 'bottomRight'
+            }))
+          }
+        }
+      }
       setErrorReq(err as AxiosError)
     }
 
@@ -143,7 +158,7 @@ const MovieUploadModal: React.FC<MovieUploadModalProps> = ({ open, onClose }) =>
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files);
     },
-    openFileDialogOnClick: file ? false : true
+    openFileDialogOnClick: !file || errorReq ? true : false
   }
 
   const handleUpdateMovie = async () => {
